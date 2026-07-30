@@ -1,0 +1,87 @@
+/* ==========================================================================
+   TESTIMONIALS.CSS
+   Section "Témoignages" : cartes avec citation, avatar, nom et note en
+   étoiles. Grille responsive, pas de dépendance JS obligatoire (le slider
+   est un bonus progressif géré par testimonials-slider.js).
+   ========================================================================== */
+
+.testimonials {
+  background-color: var(--color-off-white);
+  position: relative;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.testimonial-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-md);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.testimonial-card__quote-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--color-gold);
+  opacity: 0.5;
+  margin-bottom: var(--space-sm);
+}
+
+.testimonial-card__stars {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: var(--space-sm);
+}
+
+.testimonial-card__stars svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--color-gold);
+}
+
+.testimonial-card__text {
+  font-size: var(--fs-sm);
+  color: var(--color-text-primary);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-md);
+  font-style: italic;
+}
+
+.testimonial-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+}
+
+.testimonial-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--color-gold-light);
+}
+
+.testimonial-card__name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-navy);
+}
+
+.testimonial-card__role {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}

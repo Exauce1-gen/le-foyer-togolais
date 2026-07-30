@@ -1,0 +1,230 @@
+/* ==========================================================================
+   CONTACT.CSS
+   Section Contact : coordonnées (WhatsApp, email, adresse) + formulaire
+   de contact + emplacement Google Maps, en deux colonnes.
+   ========================================================================== */
+
+.contact {
+  background-color: var(--color-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 85% 15%, rgba(201, 150, 90, 0.1) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.contact .section-eyebrow {
+  color: var(--color-gold-light);
+}
+
+.contact .section-title {
+  color: var(--color-white);
+}
+
+.contact .section-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* ---------- Colonne infos + carte ---------- */
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.contact-info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.contact-info-card:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.contact-info-card__icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(201, 150, 90, 0.2);
+}
+
+.contact-info-card__icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-gold-light);
+  fill: none;
+  stroke-width: 2;
+}
+
+.contact-info-card__label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.2rem;
+}
+
+.contact-info-card__value {
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  color: var(--color-white);
+}
+
+.contact-info-card a.contact-info-card__value:hover {
+  color: var(--color-gold-light);
+}
+
+/* Emplacement réservé Google Maps */
+.contact__map {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: var(--space-xs);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.contact__map iframe {
+  width: 100%;
+  height: 260px;
+  border: 0;
+  display: block;
+}
+
+/* ---------- Colonne formulaire ---------- */
+.contact__form {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-navy);
+  margin-bottom: 0.4rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: var(--fs-base);
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-off-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(201, 150, 90, 0.15);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-error {
+  display: none;
+  font-size: var(--fs-xs);
+  color: var(--color-error);
+  margin-top: 0.35rem;
+}
+
+.form-group.has-error .form-input,
+.form-group.has-error .form-textarea,
+.form-group.has-error .form-select {
+  border-color: var(--color-error);
+}
+
+.form-group.has-error .form-error {
+  display: block;
+}
+
+.contact__form .btn {
+  width: 100%;
+}
+
+.form-success {
+  display: none;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+  border: 1px solid rgba(46, 125, 50, 0.3);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-md);
+}
+
+.form-success.is-visible {
+  display: flex;
+}
+
+.form-success svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-success);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .contact__form {
+    padding: var(--space-md);
+  }
+}

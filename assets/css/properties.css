@@ -1,0 +1,431 @@
+/* ==========================================================================
+   PROPERTIES.CSS
+   Section "Nos biens" : boutons de filtre (Vente/Location/Villa/...) et
+   grille de cartes générées dynamiquement depuis data/properties.json.
+   ========================================================================== */
+
+.properties {
+  background-color: var(--color-white);
+}
+
+/* ---------- Barre d'outils : recherche + tri ---------- */
+.properties__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.properties__search {
+  position: relative;
+  flex: 1 1 280px;
+  max-width: 380px;
+}
+
+.properties__search input {
+  width: 100%;
+  padding: 0.7rem 1rem 0.7rem 2.6rem;
+  font-size: var(--fs-sm);
+  font-family: var(--font-body);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-off-white);
+  transition: border-color var(--transition-fast);
+}
+
+.properties__search input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.properties__search svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  stroke: var(--color-text-muted);
+  fill: none;
+  stroke-width: 2;
+  pointer-events: none;
+}
+
+.properties__sort {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.properties__sort select {
+  padding: 0.6rem 2rem 0.6rem 1rem;
+  font-size: var(--fs-sm);
+  font-family: var(--font-body);
+  color: var(--color-navy);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-off-white);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232E323B' stroke-width='2'><path d='M6 9l6 6 6-6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 14px;
+}
+
+.properties__count {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- Sous-sections Location / Vente ---------- */
+.properties__group {
+  margin-bottom: var(--space-2xl);
+}
+
+.properties__group:last-of-type {
+  margin-bottom: var(--space-xl);
+}
+
+.properties__group-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.properties__group-title {
+  font-size: var(--fs-xl);
+  color: var(--color-navy);
+  position: relative;
+  padding-left: var(--space-sm);
+}
+
+.properties__group-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 22px;
+  background-color: var(--color-gold);
+  border-radius: var(--radius-full);
+}
+
+.properties__group .properties__count {
+  margin-bottom: 0;
+}
+
+.properties__group .properties__cta {
+  margin-top: var(--space-lg);
+}
+
+.properties__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: var(--space-xl);
+}
+
+.properties__filters .gallery-filter {
+  /* Réutilise le style des boutons de filtre de la galerie pour cohérence visuelle */
+}
+
+.properties__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.property-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.property-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.property-card__image-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--color-off-white);
+}
+
+/* ---------- Carrousel (slider) de photos dans la carte ---------- */
+.property-card__slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.property-card__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.property-card__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.property-card__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Flèches précédent/suivant (visibles au survol sur desktop, toujours visibles sur mobile) */
+.property-card__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(27, 30, 35, 0.55);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast), background-color var(--transition-fast);
+  z-index: 2;
+}
+
+.property-card__image-wrap:hover .property-card__nav {
+  opacity: 1;
+}
+
+.property-card__nav:hover {
+  background-color: var(--color-gold);
+  color: var(--color-navy);
+}
+
+.property-card__nav svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+}
+
+.property-card__nav--prev { left: 8px; }
+.property-card__nav--next { right: 8px; }
+
+/* Compteur type "1 / 8" en bas à droite */
+.property-card__counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 0.25rem 0.65rem;
+  background-color: rgba(27, 30, 35, 0.65);
+  color: var(--color-white);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  border-radius: var(--radius-full);
+  z-index: 2;
+  backdrop-filter: blur(3px);
+}
+
+/* Points de pagination (optionnels, sous le compteur si peu de photos) */
+.property-card__dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 2;
+}
+
+.property-card__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.property-card__dot.is-active {
+  background-color: var(--color-gold);
+  transform: scale(1.3);
+}
+
+/* Icône loupe (zoom) au survol, centrée */
+.property-card__zoom-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(27, 30, 35, 0);
+  transition: background var(--transition-fast);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.property-card__image-wrap:hover .property-card__zoom-hint {
+  background: rgba(27, 30, 35, 0.12);
+}
+
+.property-card__zoom-hint svg {
+  width: 34px;
+  height: 34px;
+  stroke: var(--color-white);
+  fill: none;
+  stroke-width: 1.6;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all var(--transition-fast);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+
+.property-card__image-wrap:hover .property-card__zoom-hint svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.property-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.property-card:hover .property-card__image-wrap img {
+  transform: scale(1.08);
+}
+
+.property-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  padding: 0.35rem 0.8rem;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-full);
+  color: var(--color-white);
+}
+
+.property-card__badge--vente {
+  background-color: var(--color-navy);
+}
+
+.property-card__badge--location {
+  background-color: var(--color-gold-dark);
+}
+
+.property-card__badge--meuble {
+  top: 48px;
+  background-color: rgba(27, 30, 35, 0.75);
+}
+
+.property-card__body {
+  padding: var(--space-md);
+}
+
+.property-card__type {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gold-dark);
+  margin-bottom: 0.3rem;
+}
+
+.property-card__title {
+  font-size: var(--fs-md);
+  margin-bottom: 0.4rem;
+  line-height: var(--lh-tight);
+}
+
+.property-card__location {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.property-card__location svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--color-gold-dark);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.property-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.property-card__price {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  color: var(--color-navy);
+}
+
+.properties__cta {
+  text-align: center;
+  margin-top: var(--space-xl);
+}
+
+.properties__empty {
+  display: none;
+  text-align: center;
+  padding: var(--space-2xl) 0;
+  color: var(--color-text-muted);
+}
+
+.properties__empty.is-visible {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .properties__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .properties__search {
+    max-width: none;
+  }
+  .properties__sort {
+    justify-content: space-between;
+  }
+  .properties__sort select {
+    flex: 1;
+  }
+}

@@ -1,0 +1,124 @@
+/* ==========================================================================
+   SERVICES.CSS
+   Section "Nos services" : cartes élégantes avec illustration/icône,
+   pour chaque grande famille de service de l'agence.
+   ========================================================================== */
+
+.services {
+  background-color: var(--color-off-white);
+}
+
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.service-card {
+  position: relative;
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  overflow: hidden;
+}
+
+.service-card::before {
+  /* Liseré doré qui apparaît au survol, en haut de la carte */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-navy));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-base);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-card__icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background-color: rgba(46, 50, 59, 0.06);
+  margin-bottom: var(--space-md);
+}
+
+.service-card__icon svg {
+  width: 30px;
+  height: 30px;
+  stroke: var(--color-navy);
+  fill: none;
+  stroke-width: 1.6;
+}
+
+.service-card__title {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.service-card__text {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-sm);
+}
+
+.service-card__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.service-card__tag {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--color-navy);
+  background-color: rgba(201, 150, 90, 0.15);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+}
+
+/* Carte mise en avant (ex : Gestion immobilière) - légèrement différenciée */
+.service-card--featured {
+  background: linear-gradient(160deg, var(--color-navy), var(--color-navy-dark));
+  border-color: transparent;
+}
+
+.service-card--featured .service-card__icon {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.service-card--featured .service-card__icon svg {
+  stroke: var(--color-gold-light);
+}
+
+.service-card--featured .service-card__title,
+.service-card--featured .service-card__text {
+  color: var(--color-white);
+}
+
+.service-card--featured .service-card__text {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.service-card--featured .service-card__tag {
+  background-color: rgba(201, 150, 90, 0.25);
+  color: var(--color-gold-light);
+}

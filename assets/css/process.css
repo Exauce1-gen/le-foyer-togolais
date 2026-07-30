@@ -1,0 +1,136 @@
+/* ==========================================================================
+   PROCESS.CSS
+   Section "Processus" : 4 étapes (Contact, Visite, Signature, Remise des
+   clés) présentées sous forme de timeline horizontale (verticale sur mobile).
+   ========================================================================== */
+
+.process {
+  background-color: var(--color-navy);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Motif discret en fond pour donner du relief au fond marine uni */
+.process::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 20%, rgba(201, 150, 90, 0.08) 0%, transparent 40%),
+                     radial-gradient(circle at 80% 80%, rgba(201, 150, 90, 0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.process .section-eyebrow {
+  color: var(--color-gold-light);
+}
+
+.process .section-title {
+  color: var(--color-white);
+}
+
+.process .section-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.process__steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  position: relative;
+}
+
+/* Ligne horizontale reliant les étapes (desktop uniquement) */
+.process__steps::before {
+  content: '';
+  position: absolute;
+  top: 34px;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(201, 150, 90, 0.5) 0,
+    rgba(201, 150, 90, 0.5) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+.process-step {
+  position: relative;
+  text-align: center;
+  padding-top: var(--space-xs);
+}
+
+.process-step__number {
+  position: relative;
+  z-index: 1;
+  width: 68px;
+  height: 68px;
+  margin-inline: auto;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+  color: var(--color-navy);
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  box-shadow: 0 0 0 6px var(--color-navy), var(--shadow-gold);
+}
+
+.process-step__title {
+  color: var(--color-white);
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-xs);
+}
+
+.process-step__text {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  max-width: 220px;
+  margin-inline: auto;
+}
+
+@media (max-width: 900px) {
+  .process__steps {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .process__steps::before {
+    top: 0;
+    bottom: 0;
+    left: 34px;
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(201, 150, 90, 0.5) 0,
+      rgba(201, 150, 90, 0.5) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
+
+  .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    text-align: left;
+  }
+
+  .process-step__number {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .process-step__text {
+    max-width: none;
+    margin-inline: 0;
+  }
+}

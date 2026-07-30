@@ -1,0 +1,217 @@
+/* ==========================================================================
+   HEADER.CSS
+   En-tête fixe avec logo (icône image + nom en texte réel), navigation,
+   et bouton CTA WhatsApp. Devient opaque au scroll (voir nav.js).
+   ========================================================================== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: var(--z-header);
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  transition: background-color var(--transition-base), height var(--transition-base), box-shadow var(--transition-base);
+}
+
+/* Etat "scrolled" ajouté en JS quand l'utilisateur descend dans la page */
+.header.is-scrolled {
+  height: var(--header-height-scrolled);
+  background-color: rgba(250, 249, 246, 0.96);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* ---------- Logo (icône + texte HTML réel, voir explication précédente) ---------- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.logo__icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.logo:hover .logo__icon {
+  transform: scale(1.05);
+}
+
+.logo__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo__name {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  /* Couleur claire par défaut (hero sombre en arrière-plan), passe en marine au scroll */
+  color: var(--color-white);
+  transition: color var(--transition-base);
+}
+
+.logo__baseline {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  transition: color var(--transition-base);
+}
+
+.header.is-scrolled .logo__name {
+  color: var(--color-navy);
+}
+
+.header.is-scrolled .logo__baseline {
+  color: var(--color-gold-dark);
+}
+
+/* ---------- Navigation principale ---------- */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.nav__link {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-white);
+  position: relative;
+  padding-block: var(--space-xs);
+  transition: color var(--transition-base);
+}
+
+.header.is-scrolled .nav__link {
+  color: var(--color-navy);
+}
+
+/* Soulignement doré animé au survol / lien actif */
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-gold);
+  transition: width var(--transition-base);
+}
+
+.nav__link:hover::after,
+.nav__link.is-active::after {
+  width: 100%;
+}
+
+.nav__cta {
+  padding: 0.65rem 1.5rem;
+  font-size: var(--fs-sm);
+}
+
+/* ---------- Bouton burger (mobile) ---------- */
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  z-index: var(--z-mobile-menu);
+}
+
+.nav__toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base), opacity var(--transition-base), background-color var(--transition-base);
+}
+
+.header.is-scrolled .nav__toggle span,
+.nav__toggle.is-open span {
+  background-color: var(--color-navy);
+}
+
+/* Animation croix quand le menu est ouvert */
+.nav__toggle.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav__toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.nav__toggle.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ==========================================================================
+   RESPONSIVE - Header mobile / tablette (voir aussi responsive.css)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .nav__toggle {
+    display: flex;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(320px, 80vw);
+    background-color: var(--color-off-white);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: calc(var(--header-height) + var(--space-lg)) var(--space-lg) var(--space-lg);
+    box-shadow: var(--shadow-lg);
+    transform: translateX(100%);
+    transition: transform var(--transition-base);
+  }
+
+  .nav.is-open {
+    transform: translateX(0);
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    width: 100%;
+  }
+
+  .nav__link {
+    color: var(--color-navy);
+    font-size: var(--fs-md);
+  }
+
+  .nav__cta {
+    width: 100%;
+    text-align: center;
+    margin-top: var(--space-sm);
+  }
+}

@@ -1,0 +1,102 @@
+/* ==========================================================================
+   VARIABLES.CSS
+   Toutes les valeurs réutilisables du site : couleurs, typographies,
+   espacements, ombres, transitions. Modifie ce fichier pour changer
+   l'identité visuelle du site sans toucher au reste du CSS.
+   ========================================================================== */
+
+:root {
+
+  /* ---------- COULEURS PRINCIPALES (identité "Le Foyer Togolais" : terracotta / doré / anthracite) ---------- */
+  --color-navy: #2E323B;          /* Anthracite - couleur principale (remplace l'ancien bleu marine) */
+  --color-navy-light: #3F4550;    /* Anthracite plus clair - hover, dégradés */
+  --color-navy-dark: #1B1E23;     /* Anthracite très foncé - footer, fonds sombres */
+
+  --color-gold: #C9965A;          /* Doré/ocre du logo - accents premium, CTA secondaires */
+  --color-gold-light: #DDB483;    /* Doré clair - hover sur éléments dorés */
+  --color-gold-dark: #A87A42;     /* Doré foncé - texte sur fond clair */
+
+  --color-terracotta: #B5583C;    /* Terracotta du logo (feuille) - accent chaleureux, badges "vente" */
+  --color-terracotta-light: #C97456; /* Terracotta clair - hover */
+  --color-terracotta-dark: #8F4530;  /* Terracotta foncé */
+
+  --color-white: #FFFFFF;
+  --color-off-white: #FAF9F6;     /* Blanc cassé - fonds de section */
+  --color-gray-light: #E5E5E5;    /* Gris clair - séparateurs, fonds secondaires */
+  --color-gray-medium: #9CA3AF;   /* Gris moyen - texte secondaire */
+  --color-gray-dark: #2B2B2B;     /* Gris anthracite - texte principal */
+
+  --color-success: #2E7D32;       /* Vert - confirmations, disponibilité */
+  --color-error: #C0392B;         /* Rouge - erreurs de formulaire */
+
+  /* ---------- COULEURS SEMANTIQUES (usage fonctionnel) ---------- */
+  --color-bg-primary: var(--color-off-white);
+  --color-bg-dark: var(--color-navy);
+  --color-text-primary: var(--color-gray-dark);
+  --color-text-light: var(--color-off-white);
+  --color-text-muted: var(--color-gray-medium);
+  --color-border: var(--color-gray-light);
+
+  /* ---------- TYPOGRAPHIE ---------- */
+  /* Police de titres : élégante, avec empattements pour le côté "prestige" */
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  /* Police de texte courant : moderne, lisible, sans-serif */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --fs-xs: 0.75rem;      /* 12px */
+  --fs-sm: 0.875rem;     /* 14px */
+  --fs-base: 1rem;       /* 16px */
+  --fs-md: 1.125rem;     /* 18px */
+  --fs-lg: 1.25rem;      /* 20px */
+  --fs-xl: 1.5rem;       /* 24px */
+  --fs-2xl: 2rem;        /* 32px */
+  --fs-3xl: 2.5rem;      /* 40px */
+  --fs-4xl: 3.25rem;     /* 52px */
+  --fs-5xl: 4rem;        /* 64px */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.8;
+
+  /* ---------- ESPACEMENTS (échelle cohérente) ---------- */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 1rem;      /* 16px */
+  --space-md: 1.5rem;    /* 24px */
+  --space-lg: 2.5rem;    /* 40px */
+  --space-xl: 4rem;      /* 64px */
+  --space-2xl: 6rem;     /* 96px */
+  --space-3xl: 8rem;     /* 128px */
+
+  /* ---------- LAYOUT ---------- */
+  --container-max-width: 1280px;
+  --container-padding: 1.5rem;
+  --header-height: 88px;
+  --header-height-scrolled: 72px;
+
+  /* ---------- BORDURES & ARRONDIS ---------- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  /* ---------- OMBRES (subtiles, premium) ---------- */
+  --shadow-sm: 0 2px 8px rgba(46, 50, 59, 0.06);
+  --shadow-md: 0 8px 24px rgba(46, 50, 59, 0.10);
+  --shadow-lg: 0 16px 48px rgba(46, 50, 59, 0.16);
+  --shadow-gold: 0 8px 24px rgba(201, 150, 90, 0.25);
+
+  /* ---------- TRANSITIONS ---------- */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---------- Z-INDEX (échelle centralisée pour éviter les conflits) ---------- */
+  --z-header: 100;
+  --z-mobile-menu: 200;
+  --z-modal: 300;
+}

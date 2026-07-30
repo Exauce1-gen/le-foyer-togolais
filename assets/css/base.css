@@ -1,0 +1,213 @@
+/* ==========================================================================
+   BASE.CSS
+   Styles globaux appliqués à l'ensemble du site : typographie de base,
+   conteneurs, boutons génériques, titres de section, utilitaires communs.
+   ========================================================================== */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--color-navy);
+}
+
+h1 { font-size: var(--fs-5xl); }
+h2 { font-size: var(--fs-3xl); }
+h3 { font-size: var(--fs-2xl); }
+h4 { font-size: var(--fs-lg); }
+
+/* Amélioration accessibilité clavier : contour visible et propre au focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- Conteneur centré, largeur max cohérente sur tout le site ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* ---------- En-tête de section réutilisable (titre + sous-titre centrés) ---------- */
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin-inline: auto;
+  margin-bottom: var(--space-xl);
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.section-title {
+  margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+  font-size: var(--fs-md);
+  color: var(--color-text-muted);
+  line-height: var(--lh-relaxed);
+}
+
+section {
+  padding-block: var(--space-2xl);
+}
+
+/* ---------- Boutons génériques (utilisés partout : hero, services, contact...) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 0.9rem 2rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Bouton principal : doré, très visible, pour les CTA prioritaires */
+.btn-primary {
+  background-color: var(--color-gold);
+  color: var(--color-navy);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gold-light);
+  box-shadow: 0 12px 32px rgba(201, 150, 90, 0.35);
+}
+
+/* Bouton secondaire : contour blanc, pour usage sur fond sombre (hero) */
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--color-white);
+}
+
+/* Bouton contour marine : pour usage sur fond clair (ex: lien secondaire) */
+.btn-outline-navy {
+  background-color: transparent;
+  color: var(--color-navy);
+  border: 2px solid var(--color-navy);
+}
+
+.btn-outline-navy:hover {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* Bouton WhatsApp : vert reconnaissable, utilisé sur les cartes de biens */
+.btn-whatsapp {
+  background-color: #25D366;
+  color: var(--color-white);
+  font-size: var(--fs-sm);
+  padding: 0.7rem 1.4rem;
+}
+
+.btn-whatsapp:hover {
+  background-color: #1EBE59;
+}
+
+.btn-whatsapp svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ---------- Icône WhatsApp flottante (visible sur toutes les pages) ---------- */
+.whatsapp-float {
+  position: fixed;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-header);
+  transition: transform var(--transition-fast);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+}
+
+.whatsapp-float svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--color-white);
+}
+
+/* ---------- Utilitaires ---------- */
+.text-center { text-align: center; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Lien d'évitement pour accessibilité clavier (aller directement au contenu) */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-sm);
+  background: var(--color-navy);
+  color: var(--color-white);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  z-index: 999;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-sm);
+}

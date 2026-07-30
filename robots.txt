@@ -1,0 +1,5 @@
+# robots.txt - Garantie Habitat Lomé
+User-agent: *
+Allow: /
+
+Sitemap: https://www.garantiehabitatlome.com/sitemap.xml

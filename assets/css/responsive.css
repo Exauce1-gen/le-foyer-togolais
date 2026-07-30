@@ -1,0 +1,45 @@
+/* ==========================================================================
+   RESPONSIVE.CSS
+   Ajustements globaux qui ne concernent pas un seul composant (typographie
+   fluide, espacements de section, conteneur). Les responsive spécifiques à
+   un composant (header, hero, cartes...) restent dans leur propre fichier
+   pour rester faciles à retrouver et modifier.
+   ========================================================================== */
+
+/* ---------- Tablette (≤ 960px) ---------- */
+@media (max-width: 960px) {
+  :root {
+    --space-2xl: 4.5rem;
+    --space-3xl: 6rem;
+  }
+
+  h1 { font-size: var(--fs-4xl); }
+  h2 { font-size: var(--fs-2xl); }
+
+  section {
+    padding-block: var(--space-xl);
+  }
+}
+
+/* ---------- Mobile (≤ 640px) ---------- */
+@media (max-width: 640px) {
+  :root {
+    --container-padding: 1.25rem;
+    --space-2xl: 3.5rem;
+  }
+
+  h1 { font-size: var(--fs-3xl); }
+  h2 { font-size: var(--fs-xl); }
+  h3 { font-size: var(--fs-lg); }
+
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+}
+
+/* ---------- Très petits écrans (≤ 380px) ---------- */
+@media (max-width: 380px) {
+  :root {
+    --container-padding: 1rem;
+  }
+}

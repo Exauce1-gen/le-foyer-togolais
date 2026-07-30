@@ -1,0 +1,129 @@
+/* ==========================================================================
+   INVEST.CSS
+   Section "Pourquoi investir au Togo ?" : argumentaire professionnel en
+   deux colonnes (texte + points clés chiffrés).
+   ========================================================================== */
+
+.invest {
+  background-color: var(--color-white);
+}
+
+.invest__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.invest__content .section-header {
+  text-align: left;
+  margin-inline: 0;
+  margin-bottom: var(--space-md);
+}
+
+.invest__text {
+  color: var(--color-text-muted);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-md);
+}
+
+.invest__points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.invest-point {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.invest-point__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(201, 150, 90, 0.15);
+}
+
+.invest-point__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-gold-dark);
+  fill: none;
+  stroke-width: 2;
+}
+
+.invest-point__title {
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  color: var(--color-navy);
+  margin-bottom: 0.2rem;
+}
+
+.invest-point__text {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  line-height: var(--lh-normal);
+}
+
+/* ---------- Bloc chiffres clés (colonne de droite) ---------- */
+.invest__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.invest-stat {
+  background-color: var(--color-off-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-align: center;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.invest-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.invest-stat__number {
+  font-family: var(--font-heading);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-navy);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+
+.invest-stat__number span {
+  color: var(--color-gold-dark);
+}
+
+.invest-stat__label {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .invest__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .invest__content .section-header {
+    text-align: center;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .invest__stats {
+    grid-template-columns: 1fr;
+  }
+}
