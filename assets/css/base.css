@@ -157,8 +157,8 @@ section {
 /* ---------- Icône WhatsApp flottante (visible sur toutes les pages) ---------- */
 .whatsapp-float {
   position: fixed;
-  bottom: var(--space-md);
-  right: var(--space-md);
+  bottom: max(var(--space-md), env(safe-area-inset-bottom));
+  right: max(var(--space-md), env(safe-area-inset-right));
   width: 60px;
   height: 60px;
   background-color: #25D366;
@@ -169,6 +169,19 @@ section {
   box-shadow: var(--shadow-lg);
   z-index: var(--z-header);
   transition: transform var(--transition-fast);
+}
+
+@media (max-width: 480px) {
+  .whatsapp-float {
+    width: 52px;
+    height: 52px;
+    bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+    right: max(var(--space-sm), env(safe-area-inset-right));
+  }
+  .whatsapp-float svg {
+    width: 26px;
+    height: 26px;
+  }
 }
 
 .whatsapp-float:hover {
