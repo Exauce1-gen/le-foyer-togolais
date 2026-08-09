@@ -90,6 +90,18 @@ section {
   border-radius: var(--radius-full);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
   white-space: nowrap;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Sur petits écrans, les boutons à texte long (ex: "Consulter la liste
+   entière des biens...") passent à la ligne au lieu d'être coupés ou de
+   forcer un débordement horizontal. */
+@media (max-width: 640px) {
+  .btn {
+    white-space: normal;
+    line-height: 1.3;
+  }
 }
 
 .btn:hover {
