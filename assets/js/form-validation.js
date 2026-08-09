@@ -82,7 +82,7 @@
     waMessage += 'Sujet : ' + subject + '\n';
     waMessage += 'Message : ' + message;
 
-    const whatsappUrl = 'https://wa.me/22870079423?text=' + encodeURIComponent(waMessage);
+    const whatsappUrl = 'https://wa.me/22873079423?text=' + encodeURIComponent(waMessage);
 
     // Affiche un message de confirmation avant la redirection
     if (successMessage) {
