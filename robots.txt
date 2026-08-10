@@ -1,5 +1,5 @@
-# robots.txt - Garantie Habitat Lomé
+# robots.txt - Le Foyer Togolais
 User-agent: *
 Allow: /
 
-Sitemap: https://www.garantiehabitatlome.com/sitemap.xml
+Sitemap: https://lefoyertogolais.com/sitemap.xml
