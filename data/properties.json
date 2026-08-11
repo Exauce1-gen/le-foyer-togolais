@@ -10,9 +10,26 @@
     "priceLabel": "35 000 – 40 000 FCFA / mois",
     "sortPrice": 35000,
     "description": "Nouvelle construction composée de pièces internes avec baie vitrée, staff, compteur Cash Power, compteur d'eau individuel et sonnerie.",
-    "conditions": ["Avance : 4 mois", "Caution : 6 mois", "Commission : 1 mois", "Visite : 5 000 FCFA"],
+    "conditions": [
+      "Avance : 4 mois",
+      "Caution : 6 mois",
+      "Commission : 1 mois",
+      "Visite : 5 000 FCFA"
+    ],
     "dateAdded": "2026-06-05",
-    "images": ["listing-01/01.jpg","listing-01/02.jpg","listing-01/03.jpg","listing-01/04.jpg","listing-01/05.jpg","listing-01/06.jpg","listing-01/07.jpg","listing-01/08.jpg","listing-01/09.jpg","listing-01/10.jpg","listing-01/11.jpg"]
+    "images": [
+      "listing-01/01.jpg",
+      "listing-01/02.jpg",
+      "listing-01/03.jpg",
+      "listing-01/04.jpg",
+      "listing-01/05.jpg",
+      "listing-01/06.jpg",
+      "listing-01/07.jpg",
+      "listing-01/08.jpg",
+      "listing-01/09.jpg",
+      "listing-01/10.jpg",
+      "listing-01/11.jpg"
+    ]
   },
   {
     "id": "listing-02",
@@ -25,10 +42,22 @@
     "priceLabel": "100 000 FCFA / mois",
     "sortPrice": 100000,
     "description": "Grande boutique de 45 m² avec sanitaire interne et compteur Cash Power individuel.",
-    "conditions": ["Caution : 6 mois", "Avance : 2 mois", "Commission : 1 mois", "Visite facturée"],
+    "conditions": [
+      "Caution : 6 mois",
+      "Avance : 2 mois",
+      "Commission : 1 mois",
+      "Visite facturée"
+    ],
     "surface": "45 m²",
     "dateAdded": "2026-07-02",
-    "images": ["listing-02/01.jpg","listing-02/02.jpg","listing-02/03.jpg","listing-02/04.jpg","listing-02/05.jpg","listing-02/06.jpg"]
+    "images": [
+      "listing-02/01.jpg",
+      "listing-02/02.jpg",
+      "listing-02/03.jpg",
+      "listing-02/04.jpg",
+      "listing-02/05.jpg",
+      "listing-02/06.jpg"
+    ]
   },
   {
     "id": "listing-03",
@@ -41,9 +70,19 @@
     "priceLabel": "250 000 FCFA / mois",
     "sortPrice": 250000,
     "description": "Appartement meublé de deux chambres salon, entièrement équipé et prêt à vivre.",
-    "conditions": ["Caution : 50 000 FCFA"],
+    "conditions": [
+      "Caution : 50 000 FCFA"
+    ],
     "dateAdded": "2026-07-03",
-    "images": ["listing-03/01.jpg","listing-03/02.jpg","listing-03/03.jpg","listing-03/04.jpg","listing-03/05.jpg","listing-03/06.jpg","listing-03/07.jpg"]
+    "images": [
+      "listing-03/01.jpg",
+      "listing-03/02.jpg",
+      "listing-03/03.jpg",
+      "listing-03/04.jpg",
+      "listing-03/05.jpg",
+      "listing-03/06.jpg",
+      "listing-03/07.jpg"
+    ]
   },
   {
     "id": "listing-04",
@@ -58,7 +97,14 @@
     "description": "Villa de 3 chambres autonomes avec salon, cuisine et garage.",
     "conditions": [],
     "dateAdded": "2026-07-04",
-    "images": ["listing-04/01.jpg","listing-04/02.jpg","listing-04/03.jpg","listing-04/04.jpg","listing-04/05.jpg","listing-04/06.jpg"]
+    "images": [
+      "listing-04/01.jpg",
+      "listing-04/02.jpg",
+      "listing-04/03.jpg",
+      "listing-04/04.jpg",
+      "listing-04/05.jpg",
+      "listing-04/06.jpg"
+    ]
   },
   {
     "id": "listing-05",
@@ -71,9 +117,23 @@
     "priceLabel": "50 000 FCFA / nuit — 600 000 FCFA / mois",
     "sortPrice": 600000,
     "description": "Mini villa meublée avec Wi-Fi, Smart TV, terrasse et garage. Disponible à la nuitée, à la semaine ou au mois.",
-    "conditions": ["Nuit : 50 000 FCFA", "Semaine : 220 000 FCFA", "2 semaines : 320 000 FCFA", "Mois : 600 000 FCFA"],
+    "conditions": [
+      "Nuit : 50 000 FCFA",
+      "Semaine : 220 000 FCFA",
+      "2 semaines : 320 000 FCFA",
+      "Mois : 600 000 FCFA"
+    ],
     "dateAdded": "2026-07-05",
-    "images": ["listing-05/01.jpg","listing-05/02.jpg","listing-05/03.jpg","listing-05/04.jpg","listing-05/05.jpg","listing-05/06.jpg","listing-05/07.jpg","listing-05/08.jpg"]
+    "images": [
+      "listing-05/01.jpg",
+      "listing-05/02.jpg",
+      "listing-05/03.jpg",
+      "listing-05/04.jpg",
+      "listing-05/05.jpg",
+      "listing-05/06.jpg",
+      "listing-05/07.jpg",
+      "listing-05/08.jpg"
+    ]
   },
   {
     "id": "listing-06",
@@ -88,7 +148,13 @@
     "description": "Mini villa de trois chambres salon entièrement climatisée avec Wi-Fi.",
     "conditions": [],
     "dateAdded": "2026-07-06",
-    "images": ["listing-06/01.jpg","listing-06/02.jpg","listing-06/03.jpg","listing-06/04.jpg","listing-06/05.jpg"]
+    "images": [
+      "listing-06/01.jpg",
+      "listing-06/02.jpg",
+      "listing-06/03.jpg",
+      "listing-06/04.jpg",
+      "listing-06/05.jpg"
+    ]
   },
   {
     "id": "listing-07",
@@ -103,7 +169,11 @@
     "description": "Terrain urbain clôturé avec titre foncier.",
     "conditions": [],
     "dateAdded": "2026-07-07",
-    "images": ["listing-07/01.jpg","listing-07/02.jpg","listing-07/03.jpg"]
+    "images": [
+      "listing-07/01.jpg",
+      "listing-07/02.jpg",
+      "listing-07/03.jpg"
+    ]
   },
   {
     "id": "listing-08",
@@ -118,7 +188,23 @@
     "description": "Villa meublée haut standing avec trois chambres, cuisine équipée, barbecue, Wi-Fi, eau chaude et garage.",
     "conditions": [],
     "dateAdded": "2026-07-08",
-    "images": ["listing-08/01.jpg","listing-08/02.jpg","listing-08/03.jpg","listing-08/04.jpg","listing-08/05.jpg","listing-08/06.jpg","listing-08/07.jpg","listing-08/08.jpg","listing-08/09.jpg","listing-08/10.jpg","listing-08/11.jpg","listing-08/12.jpg","listing-08/13.jpg","listing-08/14.jpg","listing-08/15.jpg"]
+    "images": [
+      "listing-08/01.jpg",
+      "listing-08/02.jpg",
+      "listing-08/03.jpg",
+      "listing-08/04.jpg",
+      "listing-08/05.jpg",
+      "listing-08/06.jpg",
+      "listing-08/07.jpg",
+      "listing-08/08.jpg",
+      "listing-08/09.jpg",
+      "listing-08/10.jpg",
+      "listing-08/11.jpg",
+      "listing-08/12.jpg",
+      "listing-08/13.jpg",
+      "listing-08/14.jpg",
+      "listing-08/15.jpg"
+    ]
   },
   {
     "id": "listing-09",
@@ -133,7 +219,14 @@
     "description": "Appartements haut standing climatisés avec garage et sécurité. Plusieurs formules disponibles : 100 000 / 200 000 / 300 000 / 420 000 FCFA.",
     "conditions": [],
     "dateAdded": "2026-07-09",
-    "images": ["listing-09/01.jpg","listing-09/02.jpg","listing-09/03.jpg","listing-09/04.jpg","listing-09/05.jpg","listing-09/06.jpg"]
+    "images": [
+      "listing-09/01.jpg",
+      "listing-09/02.jpg",
+      "listing-09/03.jpg",
+      "listing-09/04.jpg",
+      "listing-09/05.jpg",
+      "listing-09/06.jpg"
+    ]
   },
   {
     "id": "listing-10",
@@ -148,7 +241,14 @@
     "description": "Appartement disponible à la location dans le quartier d'Atikoumé.",
     "conditions": [],
     "dateAdded": "2026-07-10",
-    "images": ["listing-10/01.jpg","listing-10/02.jpg","listing-10/03.jpg","listing-10/04.jpg","listing-10/05.jpg","listing-10/06.jpg"]
+    "images": [
+      "listing-10/01.jpg",
+      "listing-10/02.jpg",
+      "listing-10/03.jpg",
+      "listing-10/04.jpg",
+      "listing-10/05.jpg",
+      "listing-10/06.jpg"
+    ]
   },
   {
     "id": "listing-11",
@@ -163,7 +263,17 @@
     "description": "Appartement disponible à la location dans le quartier d'Amadahomé.",
     "conditions": [],
     "dateAdded": "2026-07-11",
-    "images": ["listing-11/01.jpg","listing-11/02.jpg","listing-11/03.jpg","listing-11/04.jpg","listing-11/05.jpg","listing-11/06.jpg","listing-11/07.jpg","listing-11/08.jpg","listing-11/09.jpg"]
+    "images": [
+      "listing-11/01.jpg",
+      "listing-11/02.jpg",
+      "listing-11/03.jpg",
+      "listing-11/04.jpg",
+      "listing-11/05.jpg",
+      "listing-11/06.jpg",
+      "listing-11/07.jpg",
+      "listing-11/08.jpg",
+      "listing-11/09.jpg"
+    ]
   },
   {
     "id": "listing-12",
@@ -178,7 +288,11 @@
     "description": "Parcelle disponible à la vente au lot, dans la zone d'Adétikopé.",
     "conditions": [],
     "dateAdded": "2026-07-12",
-    "images": ["listing-12/01.jpg","listing-12/02.jpg","listing-12/03.jpg"],
+    "images": [
+      "listing-12/01.jpg",
+      "listing-12/02.jpg",
+      "listing-12/03.jpg"
+    ],
     "imagesPending": true
   },
   {
@@ -194,7 +308,9 @@
     "description": "Terrain disponible en bail à Zanguéra.",
     "conditions": [],
     "dateAdded": "2026-07-13",
-    "images": ["listing-13/01.jpg"]
+    "images": [
+      "listing-13/01.jpg"
+    ]
   },
   {
     "id": "listing-14",
@@ -209,7 +325,21 @@
     "description": "Villa disponible à la vente dans la zone de Zanguéra.",
     "conditions": [],
     "dateAdded": "2026-07-14",
-    "images": ["listing-14/01.jpg","listing-14/02.jpg","listing-14/03.jpg","listing-14/04.jpg","listing-14/05.jpg","listing-14/06.jpg","listing-14/07.jpg","listing-14/08.jpg","listing-14/09.jpg","listing-14/10.jpg","listing-14/11.jpg","listing-14/12.jpg","listing-14/13.jpg"]
+    "images": [
+      "listing-14/01.jpg",
+      "listing-14/02.jpg",
+      "listing-14/03.jpg",
+      "listing-14/04.jpg",
+      "listing-14/05.jpg",
+      "listing-14/06.jpg",
+      "listing-14/07.jpg",
+      "listing-14/08.jpg",
+      "listing-14/09.jpg",
+      "listing-14/10.jpg",
+      "listing-14/11.jpg",
+      "listing-14/12.jpg",
+      "listing-14/13.jpg"
+    ]
   },
   {
     "id": "listing-15",
@@ -222,9 +352,20 @@
     "priceLabel": "55 000 FCFA / nuit — 850 000 FCFA / mois",
     "sortPrice": 850000,
     "description": "Villa meublée à Avépozo, disponible à la nuitée ou au mois.",
-    "conditions": ["Nuit : 55 000 FCFA", "Mois : 850 000 FCFA"],
+    "conditions": [
+      "Nuit : 55 000 FCFA",
+      "Mois : 850 000 FCFA"
+    ],
     "dateAdded": "2026-07-15",
-    "images": ["listing-15/01.jpg","listing-15/02.jpg","listing-15/03.jpg","listing-15/04.jpg","listing-15/05.jpg","listing-15/06.jpg","listing-15/07.jpg"]
+    "images": [
+      "listing-15/01.jpg",
+      "listing-15/02.jpg",
+      "listing-15/03.jpg",
+      "listing-15/04.jpg",
+      "listing-15/05.jpg",
+      "listing-15/06.jpg",
+      "listing-15/07.jpg"
+    ]
   },
   {
     "id": "listing-16",
@@ -239,7 +380,9 @@
     "description": "Terrain disponible à la vente à Nukafu.",
     "conditions": [],
     "dateAdded": "2026-07-16",
-    "images": ["listing-16/01.jpg"]
+    "images": [
+      "listing-16/01.jpg"
+    ]
   },
   {
     "id": "listing-17",
@@ -254,7 +397,12 @@
     "description": "Petit appartement disponible à la location à Hedzranawoé.",
     "conditions": [],
     "dateAdded": "2026-07-17",
-    "images": ["listing-17/01.jpg","listing-17/02.jpg","listing-17/03.jpg","listing-17/04.jpg"],
+    "images": [
+      "listing-17/01.jpg",
+      "listing-17/02.jpg",
+      "listing-17/03.jpg",
+      "listing-17/04.jpg"
+    ],
     "imagesPending": true
   },
   {
@@ -270,7 +418,30 @@
     "description": "Villa haut standing disponible à la vente à Kégué.",
     "conditions": [],
     "dateAdded": "2026-07-18",
-    "images": ["listing-18/01.jpg","listing-18/02.jpg","listing-18/03.jpg","listing-18/04.jpg","listing-18/05.jpg","listing-18/06.jpg","listing-18/07.jpg","listing-18/08.jpg","listing-18/09.jpg","listing-18/10.jpg","listing-18/11.jpg","listing-18/12.jpg","listing-18/13.jpg","listing-18/14.jpg","listing-18/15.jpg","listing-18/16.jpg","listing-18/17.jpg","listing-18/18.jpg","listing-18/19.jpg","listing-18/20.jpg","listing-18/21.jpg","listing-18/22.jpg"]
+    "images": [
+      "listing-18/01.jpg",
+      "listing-18/02.jpg",
+      "listing-18/03.jpg",
+      "listing-18/04.jpg",
+      "listing-18/05.jpg",
+      "listing-18/06.jpg",
+      "listing-18/07.jpg",
+      "listing-18/08.jpg",
+      "listing-18/09.jpg",
+      "listing-18/10.jpg",
+      "listing-18/11.jpg",
+      "listing-18/12.jpg",
+      "listing-18/13.jpg",
+      "listing-18/14.jpg",
+      "listing-18/15.jpg",
+      "listing-18/16.jpg",
+      "listing-18/17.jpg",
+      "listing-18/18.jpg",
+      "listing-18/19.jpg",
+      "listing-18/20.jpg",
+      "listing-18/21.jpg",
+      "listing-18/22.jpg"
+    ]
   },
   {
     "id": "listing-19",
@@ -285,7 +456,21 @@
     "description": "Appartement meublé disponible à la location à Adidogomé.",
     "conditions": [],
     "dateAdded": "2026-07-19",
-    "images": ["listing-19/01.jpg","listing-19/02.jpg","listing-19/03.jpg","listing-19/04.jpg","listing-19/05.jpg","listing-19/06.jpg","listing-19/07.jpg","listing-19/08.jpg","listing-19/09.jpg","listing-19/10.jpg","listing-19/11.jpg","listing-19/12.jpg","listing-19/13.jpg"]
+    "images": [
+      "listing-19/01.jpg",
+      "listing-19/02.jpg",
+      "listing-19/03.jpg",
+      "listing-19/04.jpg",
+      "listing-19/05.jpg",
+      "listing-19/06.jpg",
+      "listing-19/07.jpg",
+      "listing-19/08.jpg",
+      "listing-19/09.jpg",
+      "listing-19/10.jpg",
+      "listing-19/11.jpg",
+      "listing-19/12.jpg",
+      "listing-19/13.jpg"
+    ]
   },
   {
     "id": "listing-20",
@@ -300,7 +485,18 @@
     "description": "Villa duplex R+1 disponible à la vente à Agoè Sogbossito.",
     "conditions": [],
     "dateAdded": "2026-07-20",
-    "images": ["listing-20/01.jpg","listing-20/02.jpg","listing-20/03.jpg","listing-20/04.jpg","listing-20/05.jpg","listing-20/06.jpg","listing-20/07.jpg","listing-20/08.jpg","listing-20/09.jpg","listing-20/10.jpg"]
+    "images": [
+      "listing-20/01.jpg",
+      "listing-20/02.jpg",
+      "listing-20/03.jpg",
+      "listing-20/04.jpg",
+      "listing-20/05.jpg",
+      "listing-20/06.jpg",
+      "listing-20/07.jpg",
+      "listing-20/08.jpg",
+      "listing-20/09.jpg",
+      "listing-20/10.jpg"
+    ]
   },
   {
     "id": "listing-21",
@@ -315,7 +511,19 @@
     "description": "Villa disponible à la vente à Agoè Réserve.",
     "conditions": [],
     "dateAdded": "2026-07-21",
-    "images": ["listing-21/01.jpg","listing-21/02.jpg","listing-21/03.jpg","listing-21/04.jpg","listing-21/05.jpg","listing-21/06.jpg","listing-21/07.jpg","listing-21/08.jpg","listing-21/09.jpg","listing-21/10.jpg","listing-21/11.jpg"]
+    "images": [
+      "listing-21/01.jpg",
+      "listing-21/02.jpg",
+      "listing-21/03.jpg",
+      "listing-21/04.jpg",
+      "listing-21/05.jpg",
+      "listing-21/06.jpg",
+      "listing-21/07.jpg",
+      "listing-21/08.jpg",
+      "listing-21/09.jpg",
+      "listing-21/10.jpg",
+      "listing-21/11.jpg"
+    ]
   },
   {
     "id": "listing-22",
@@ -330,7 +538,21 @@
     "description": "Villa duplex meublée disponible à la location à Totsi Total.",
     "conditions": [],
     "dateAdded": "2026-07-22",
-    "images": ["listing-22/01.jpg","listing-22/02.jpg","listing-22/03.jpg","listing-22/04.jpg","listing-22/05.jpg","listing-22/06.jpg","listing-22/07.jpg","listing-22/08.jpg","listing-22/09.jpg","listing-22/10.jpg","listing-22/11.jpg","listing-22/12.jpg","listing-22/13.jpg"]
+    "images": [
+      "listing-22/01.jpg",
+      "listing-22/02.jpg",
+      "listing-22/03.jpg",
+      "listing-22/04.jpg",
+      "listing-22/05.jpg",
+      "listing-22/06.jpg",
+      "listing-22/07.jpg",
+      "listing-22/08.jpg",
+      "listing-22/09.jpg",
+      "listing-22/10.jpg",
+      "listing-22/11.jpg",
+      "listing-22/12.jpg",
+      "listing-22/13.jpg"
+    ]
   },
   {
     "id": "listing-23",
@@ -345,7 +567,15 @@
     "description": "Villa meublée disponible à la location à Agoè Anomé.",
     "conditions": [],
     "dateAdded": "2026-07-23",
-    "images": ["listing-23/01.jpg","listing-23/02.jpg","listing-23/03.jpg","listing-23/04.jpg","listing-23/05.jpg","listing-23/06.jpg","listing-23/07.jpg"]
+    "images": [
+      "listing-23/01.jpg",
+      "listing-23/02.jpg",
+      "listing-23/03.jpg",
+      "listing-23/04.jpg",
+      "listing-23/05.jpg",
+      "listing-23/06.jpg",
+      "listing-23/07.jpg"
+    ]
   },
   {
     "id": "listing-24",
@@ -360,7 +590,25 @@
     "description": "Villa disponible à la location dans le quartier d'Avedji Opéra.",
     "conditions": [],
     "dateAdded": "2026-07-24",
-    "images": ["listing-24/01.jpg","listing-24/02.jpg","listing-24/03.jpg","listing-24/04.jpg","listing-24/05.jpg","listing-24/06.jpg","listing-24/07.jpg","listing-24/08.jpg","listing-24/09.jpg","listing-24/10.jpg","listing-24/11.jpg","listing-24/12.jpg","listing-24/13.jpg","listing-24/14.jpg","listing-24/15.jpg","listing-24/16.jpg","listing-24/17.jpg"]
+    "images": [
+      "listing-24/01.jpg",
+      "listing-24/02.jpg",
+      "listing-24/03.jpg",
+      "listing-24/04.jpg",
+      "listing-24/05.jpg",
+      "listing-24/06.jpg",
+      "listing-24/07.jpg",
+      "listing-24/08.jpg",
+      "listing-24/09.jpg",
+      "listing-24/10.jpg",
+      "listing-24/11.jpg",
+      "listing-24/12.jpg",
+      "listing-24/13.jpg",
+      "listing-24/14.jpg",
+      "listing-24/15.jpg",
+      "listing-24/16.jpg",
+      "listing-24/17.jpg"
+    ]
   },
   {
     "id": "listing-25",
@@ -373,9 +621,23 @@
     "priceLabel": "225 000 FCFA (habitation) — 250 000 FCFA (bureau)",
     "sortPrice": 225000,
     "description": "Villa à usage mixte : habitation ou bureau, disponible à la location à Avedji Adroukpapé.",
-    "conditions": ["Habitation : 225 000 FCFA / mois", "Bureau : 250 000 FCFA / mois"],
+    "conditions": [
+      "Habitation : 225 000 FCFA / mois",
+      "Bureau : 250 000 FCFA / mois"
+    ],
     "dateAdded": "2026-07-25",
-    "images": ["listing-25/01.jpg","listing-25/02.jpg","listing-25/03.jpg","listing-25/04.jpg","listing-25/05.jpg","listing-25/06.jpg","listing-25/07.jpg","listing-25/08.jpg","listing-25/09.jpg","listing-25/10.jpg"]
+    "images": [
+      "listing-25/01.jpg",
+      "listing-25/02.jpg",
+      "listing-25/03.jpg",
+      "listing-25/04.jpg",
+      "listing-25/05.jpg",
+      "listing-25/06.jpg",
+      "listing-25/07.jpg",
+      "listing-25/08.jpg",
+      "listing-25/09.jpg",
+      "listing-25/10.jpg"
+    ]
   },
   {
     "id": "listing-26",
@@ -388,9 +650,24 @@
     "priceLabel": "1 300 000 FCFA / mois",
     "sortPrice": 1300000,
     "description": "Magnifique villa duplex alliant confort moderne et espaces généreux. Rez-de-chaussée : salon avec cuisine ouverte, garage, piscine. Étage : 3 grandes chambres spacieuses, chacune avec placard, climatisation et WC privatif. Villa indépendante et calme, disponible immédiatement.",
-    "conditions": ["Honoraires agence : 25% du séjour effectué", "Visite : 5 000 FCFA"],
+    "conditions": [
+      "Honoraires agence : 25% du séjour effectué",
+      "Visite : 5 000 FCFA"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-26/01.jpg","listing-26/02.jpg","listing-26/03.jpg","listing-26/04.jpg","listing-26/05.jpg","listing-26/06.jpg","listing-26/07.jpg","listing-26/08.jpg","listing-26/09.jpg","listing-26/10.jpg","listing-26/11.jpg"]
+    "images": [
+      "listing-26/01.jpg",
+      "listing-26/02.jpg",
+      "listing-26/03.jpg",
+      "listing-26/04.jpg",
+      "listing-26/05.jpg",
+      "listing-26/06.jpg",
+      "listing-26/07.jpg",
+      "listing-26/08.jpg",
+      "listing-26/09.jpg",
+      "listing-26/10.jpg",
+      "listing-26/11.jpg"
+    ]
   },
   {
     "id": "listing-27",
@@ -403,9 +680,20 @@
     "priceLabel": "50 000 000 FCFA (à débattre)",
     "sortPrice": 50000000,
     "description": "Villa de 2 chambres salon, dallée avec dépendance, garage pour 2 véhicules. Fondation prévue pour R+2.",
-    "conditions": ["Document : Titre foncier", "Surface : 300 m²", "Visite facturée"],
+    "conditions": [
+      "Document : Titre foncier",
+      "Surface : 300 m²",
+      "Visite facturée"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-27/01.jpg","listing-27/02.jpg","listing-27/03.jpg","listing-27/04.jpg","listing-27/05.jpg","listing-27/06.jpg"]
+    "images": [
+      "listing-27/01.jpg",
+      "listing-27/02.jpg",
+      "listing-27/03.jpg",
+      "listing-27/04.jpg",
+      "listing-27/05.jpg",
+      "listing-27/06.jpg"
+    ]
   },
   {
     "id": "listing-28",
@@ -418,9 +706,24 @@
     "priceLabel": "850 000 FCFA / mois",
     "sortPrice": 850000,
     "description": "Luxueux appartement de 3 chambres salon meublé, au rez-de-chaussée. Machine à laver disponible, chauffe-eau dans la douche, télé dans les chambres.",
-    "conditions": ["Caution : 100 000 FCFA", "Visite : 5 000 FCFA", "Honoraires agence : 25% (court séjour) / 1 mois (long séjour)"],
+    "conditions": [
+      "Caution : 100 000 FCFA",
+      "Visite : 5 000 FCFA",
+      "Honoraires agence : 25% (court séjour) / 1 mois (long séjour)"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-28/01.jpg","listing-28/02.jpg","listing-28/03.jpg","listing-28/04.jpg","listing-28/05.jpg","listing-28/06.jpg","listing-28/07.jpg","listing-28/08.jpg","listing-28/09.jpg","listing-28/10.jpg"]
+    "images": [
+      "listing-28/01.jpg",
+      "listing-28/02.jpg",
+      "listing-28/03.jpg",
+      "listing-28/04.jpg",
+      "listing-28/05.jpg",
+      "listing-28/06.jpg",
+      "listing-28/07.jpg",
+      "listing-28/08.jpg",
+      "listing-28/09.jpg",
+      "listing-28/10.jpg"
+    ]
   },
   {
     "id": "listing-29",
@@ -433,9 +736,23 @@
     "priceLabel": "4 000 000 FCFA / mois",
     "sortPrice": 4000000,
     "description": "Chambre + salon, cuisine moderne équipée avec tous les accessoires, WC + douche interne, garage privé, Wifi + Canal+ inclus, interphone/vidéophone. Quartier calme.",
-    "conditions": ["Caution : 50 000 FCFA (remboursable)", "Visite : 5 000 FCFA", "Frais agence : 25% du séjour effectué"],
+    "conditions": [
+      "Caution : 50 000 FCFA (remboursable)",
+      "Visite : 5 000 FCFA",
+      "Frais agence : 25% du séjour effectué"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-29/01.jpg","listing-29/02.jpg","listing-29/03.jpg","listing-29/04.jpg","listing-29/05.jpg","listing-29/06.jpg","listing-29/07.jpg","listing-29/08.jpg","listing-29/09.jpg"]
+    "images": [
+      "listing-29/01.jpg",
+      "listing-29/02.jpg",
+      "listing-29/03.jpg",
+      "listing-29/04.jpg",
+      "listing-29/05.jpg",
+      "listing-29/06.jpg",
+      "listing-29/07.jpg",
+      "listing-29/08.jpg",
+      "listing-29/09.jpg"
+    ]
   },
   {
     "id": "listing-30",
@@ -448,9 +765,20 @@
     "priceLabel": "450 000 FCFA / mois",
     "sortPrice": 450000,
     "description": "Appartement meublé de 2 chambres, 1 salon, 1 cuisine équipée, climatisé, Wifi disponible, eau chaude. Disponible à l'étage R+1 et R+2.",
-    "conditions": ["Caution : 50 000 FCFA", "Visite : 5 000 FCFA", "Honoraires agence : 25% du séjour effectué"],
+    "conditions": [
+      "Caution : 50 000 FCFA",
+      "Visite : 5 000 FCFA",
+      "Honoraires agence : 25% du séjour effectué"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-30/01.jpg","listing-30/02.jpg","listing-30/03.jpg","listing-30/04.jpg","listing-30/05.jpg","listing-30/06.jpg"]
+    "images": [
+      "listing-30/01.jpg",
+      "listing-30/02.jpg",
+      "listing-30/03.jpg",
+      "listing-30/04.jpg",
+      "listing-30/05.jpg",
+      "listing-30/06.jpg"
+    ]
   },
   {
     "id": "listing-31",
@@ -463,9 +791,24 @@
     "priceLabel": "350 000 FCFA / mois",
     "sortPrice": 350000,
     "description": "Mini villa meublée de 2 chambres salon, chaque chambre avec sanitaire privatif, WC visiteurs, bien équipée, cash power personnel, garage pour une voiture.",
-    "conditions": ["Caution : 50 000 FCFA", "Visite : 5 000 FCFA", "Commission agence : 25% (court séjour) / 1 mois (long séjour)"],
+    "conditions": [
+      "Caution : 50 000 FCFA",
+      "Visite : 5 000 FCFA",
+      "Commission agence : 25% (court séjour) / 1 mois (long séjour)"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-31/01.jpg","listing-31/02.jpg","listing-31/03.jpg","listing-31/04.jpg","listing-31/05.jpg","listing-31/06.jpg","listing-31/07.jpg","listing-31/08.jpg","listing-31/09.jpg","listing-31/10.jpg"]
+    "images": [
+      "listing-31/01.jpg",
+      "listing-31/02.jpg",
+      "listing-31/03.jpg",
+      "listing-31/04.jpg",
+      "listing-31/05.jpg",
+      "listing-31/06.jpg",
+      "listing-31/07.jpg",
+      "listing-31/08.jpg",
+      "listing-31/09.jpg",
+      "listing-31/10.jpg"
+    ]
   },
   {
     "id": "listing-32",
@@ -478,24 +821,22 @@
     "priceLabel": "85 000 000 FCFA",
     "sortPrice": 85000000,
     "description": "Villa meublée prête à l'emploi : 2 chambres salon climatisés, 1 cuisine, 1 magasin, 1 jardin, garage pour 2 voitures. Climatiseurs dans chambres et salon, cash power, forage d'eau.",
-    "conditions": ["Document : Titre foncier", "Superficie : 251 m²", "Visite facturée"],
+    "conditions": [
+      "Document : Titre foncier",
+      "Superficie : 251 m²",
+      "Visite facturée"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-32/01.jpg","listing-32/02.jpg","listing-32/03.jpg","listing-32/04.jpg","listing-32/05.jpg","listing-32/06.jpg","listing-32/07.jpg","listing-32/08.jpg"]
-  },
-  {
-    "id": "listing-33",
-    "ref": "AN030-0726",
-    "title": "Villa haut standing à vendre — Kégué",
-    "type": "villa",
-    "operation": "vente",
-    "furnished": false,
-    "location": "Kégué, non loin du goudron",
-    "priceLabel": "300 000 000 FCFA",
-    "sortPrice": 300000000,
-    "description": "Nouvelle construction haut standing avec rooftop, piscine, jardin et garage pour 2 véhicules, vidéosurveillance 24h/24. Rez-de-chaussée : grand salon, salle à manger, cuisine moderne, 3 chambres avec sanitaires. R+1 : grand salon, 4 chambres avec sanitaires. R+2 : 1 chambre avec sanitaire et grand espace rooftop.",
-    "conditions": ["Document : Titre foncier", "Superficie : 1 lot (600 m²)", "Visite facturée"],
-    "dateAdded": "2026-08-10",
-    "images": ["listing-33/01.jpg","listing-33/02.jpg","listing-33/03.jpg","listing-33/04.jpg","listing-33/05.jpg","listing-33/06.jpg","listing-33/07.jpg","listing-33/08.jpg","listing-33/09.jpg","listing-33/10.jpg"]
+    "images": [
+      "listing-32/01.jpg",
+      "listing-32/02.jpg",
+      "listing-32/03.jpg",
+      "listing-32/04.jpg",
+      "listing-32/05.jpg",
+      "listing-32/06.jpg",
+      "listing-32/07.jpg",
+      "listing-32/08.jpg"
+    ]
   },
   {
     "id": "listing-34",
@@ -508,9 +849,20 @@
     "priceLabel": "145 000 000 FCFA",
     "sortPrice": 145000000,
     "description": "Villa duplex construite sur 200 m², à 30 m du goudron : 4 chambres avec placards et WC privatif, un salon au rez-de-chaussée et un second salon privé à l'étage, toilette visiteurs, cuisine interne avec armoires et placards, piscine, garage pour 2 voitures et rooftop aéré.",
-    "conditions": ["Documents : avis favorable (titre foncier personnel en cours)", "Visite facturée"],
+    "conditions": [
+      "Documents : avis favorable (titre foncier personnel en cours)",
+      "Visite facturée"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-34/01.jpg","listing-34/02.jpg","listing-34/03.jpg","listing-34/04.jpg","listing-34/05.jpg","listing-34/06.jpg","listing-34/07.jpg"]
+    "images": [
+      "listing-34/01.jpg",
+      "listing-34/02.jpg",
+      "listing-34/03.jpg",
+      "listing-34/04.jpg",
+      "listing-34/05.jpg",
+      "listing-34/06.jpg",
+      "listing-34/07.jpg"
+    ]
   },
   {
     "id": "listing-35",
@@ -523,8 +875,18 @@
     "priceLabel": "600 000 FCFA / mois",
     "sortPrice": 600000,
     "description": "Bureau très luxueux de 4 pièces dans un immeuble disposant d'ascenseur.",
-    "conditions": ["Caution & avance : 6 mois", "Visite facturée"],
+    "conditions": [
+      "Caution & avance : 6 mois",
+      "Visite facturée"
+    ],
     "dateAdded": "2026-08-10",
-    "images": ["listing-35/01.jpg","listing-35/02.jpg","listing-35/03.jpg","listing-35/04.jpg","listing-35/05.jpg","listing-35/06.jpg"]
+    "images": [
+      "listing-35/01.jpg",
+      "listing-35/02.jpg",
+      "listing-35/03.jpg",
+      "listing-35/04.jpg",
+      "listing-35/05.jpg",
+      "listing-35/06.jpg"
+    ]
   }
 ]
