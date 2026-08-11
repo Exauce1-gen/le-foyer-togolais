@@ -116,7 +116,7 @@
   }
 
   function typeLabel(type) {
-    const labels = { villa: 'Villa', appartement: 'Appartement', terrain: 'Terrain', boutique: 'Boutique' };
+    const labels = { villa: 'Villa', appartement: 'Appartement', terrain: 'Terrain', boutique: 'Boutique', bureau: 'Bureau' };
     return labels[type] || type;
   }
 
