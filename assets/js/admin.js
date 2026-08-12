@@ -194,16 +194,69 @@
   });
 
   // Upload chaque photo vers Supabase Storage et retourne les URLs publiques
+  // Compresse une image dans le navigateur avant upload (redimensionne à
+  // 1600px de large max, réencode en JPEG qualité 0.8). Réduit le poids
+  // d'une photo de téléphone (souvent 2-5 Mo) à environ 80-150 Ko, ce qui
+  // multiplie par 15-20 la capacité du quota gratuit Supabase (1 Go).
+  const MAX_WIDTH = 1600;
+  const JPEG_QUALITY = 0.8;
+
+  function compressImage(file) {
+    return new Promise(function (resolve, reject) {
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+
+      img.onload = function () {
+        URL.revokeObjectURL(objectUrl);
+
+        let width = img.width;
+        let height = img.height;
+        if (width > MAX_WIDTH) {
+          height = Math.round(height * (MAX_WIDTH / width));
+          width = MAX_WIDTH;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          function (blob) {
+            if (!blob) {
+              // En cas d'échec de compression, on retombe sur le fichier original
+              resolve(file);
+              return;
+            }
+            resolve(blob);
+          },
+          'image/jpeg',
+          JPEG_QUALITY
+        );
+      };
+
+      img.onerror = function () {
+        URL.revokeObjectURL(objectUrl);
+        // En cas d'échec de lecture, on retombe sur le fichier original
+        resolve(file);
+      };
+
+      img.src = objectUrl;
+    });
+  }
+
   function uploadAllPhotos(files) {
     const uploads = files.map(function (file, index) {
-      const cleanName = file.name.replace(/[^a-zA-Z0-9.]/g, '-');
-      const path = 'listings/' + Date.now() + '-' + index + '-' + cleanName;
-      return sb.storage.from('property-images').upload(path, file)
-        .then(function (result) {
-          if (result.error) throw result.error;
-          const publicUrl = sb.storage.from('property-images').getPublicUrl(path).data.publicUrl;
-          return publicUrl;
-        });
+      return compressImage(file).then(function (compressedBlob) {
+        const path = 'listings/' + Date.now() + '-' + index + '.jpg';
+        return sb.storage.from('property-images').upload(path, compressedBlob, { contentType: 'image/jpeg' })
+          .then(function (result) {
+            if (result.error) throw result.error;
+            const publicUrl = sb.storage.from('property-images').getPublicUrl(path).data.publicUrl;
+            return publicUrl;
+          });
+      });
     });
     return Promise.all(uploads);
   }
