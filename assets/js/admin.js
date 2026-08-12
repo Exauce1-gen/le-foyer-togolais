@@ -1,8 +1,9 @@
 /* ==========================================================================
    ADMIN.JS
    Gère l'espace d'administration : connexion (Supabase Auth), formulaire
-   d'ajout d'annonce avec upload de photos (Supabase Storage), et liste des
-   annonces déjà ajoutées via cet espace (avec suppression).
+   d'ajout/modification d'annonce avec upload de photos compressées
+   (Supabase Storage), et liste des annonces déjà ajoutées via cet espace
+   (avec modification et suppression).
    ========================================================================== */
 
 (function () {
@@ -19,10 +20,12 @@
   const logoutBtn = document.getElementById('logoutBtn');
 
   const listingForm = document.getElementById('listingForm');
+  const formTitle = document.getElementById('formTitle');
   const formError = document.getElementById('formError');
   const formSuccess = document.getElementById('formSuccess');
   const submitSpinner = document.getElementById('submitSpinner');
   const submitBtn = document.getElementById('submitBtn');
+  const cancelEditBtn = document.getElementById('cancelEditBtn');
 
   const conditionsContainer = document.getElementById('conditionsContainer');
   const addConditionBtn = document.getElementById('addConditionBtn');
@@ -30,10 +33,18 @@
   const dropzone = document.getElementById('dropzone');
   const fileInput = document.getElementById('fileInput');
   const previewsContainer = document.getElementById('previewsContainer');
+  const existingPreviewsWrap = document.getElementById('existingPreviewsWrap');
+  const existingPreviewsContainer = document.getElementById('existingPreviewsContainer');
+
+  const priceAmountInput = document.getElementById('fieldPriceAmount');
+  const priceFrequencySelect = document.getElementById('fieldPriceFrequency');
+  const pricePreview = document.getElementById('pricePreview');
 
   const listingsList = document.getElementById('listingsList');
 
-  let selectedFiles = [];
+  let selectedFiles = [];      // nouvelles photos ajoutées (File[])
+  let existingImages = [];     // photos déjà en ligne conservées (URLs), utilisé en mode édition
+  let editingId = null;        // null = mode ajout, sinon id de l'annonce en cours de modification
 
   // ==========================================================================
   // 1. AUTHENTIFICATION
@@ -49,7 +60,6 @@
     dashboardSection.classList.remove('is-visible');
   }
 
-  // Vérifie si une session existe déjà au chargement de la page
   sb.auth.getSession().then(function (result) {
     if (result.data.session) {
       showDashboard();
@@ -83,7 +93,26 @@
   });
 
   // ==========================================================================
-  // 2. CONDITIONS DYNAMIQUES (avance, caution, visite...)
+  // 2. PRIX AUTOMATIQUE (montant + type de tarif -> "FCFA" ajouté automatiquement)
+  // ==========================================================================
+  function formatPriceLabel(amount, frequency) {
+    if (!amount) return '';
+    const formatted = Number(amount).toLocaleString('fr-FR').replace(/\u202f/g, ' ');
+    const suffixes = { fixed: '', month: ' / mois', night: ' / nuit', week: ' / semaine' };
+    return formatted + ' FCFA' + (suffixes[frequency] || '');
+  }
+
+  function updatePricePreview() {
+    const amount = priceAmountInput.value;
+    const frequency = priceFrequencySelect.value;
+    pricePreview.textContent = amount ? formatPriceLabel(amount, frequency) : '—';
+  }
+
+  priceAmountInput.addEventListener('input', updatePricePreview);
+  priceFrequencySelect.addEventListener('change', updatePricePreview);
+
+  // ==========================================================================
+  // 3. CONDITIONS DYNAMIQUES (avance, caution, visite...)
   // ==========================================================================
   function addConditionRow(value) {
     const row = document.createElement('div');
@@ -101,11 +130,10 @@
     addConditionRow('');
   });
 
-  // Une première ligne vide par défaut
   addConditionRow('');
 
   // ==========================================================================
-  // 3. UPLOAD DE PHOTOS (sélection + prévisualisation)
+  // 4. PHOTOS : nouvelles sélections + photos existantes (mode édition)
   // ==========================================================================
   dropzone.addEventListener('click', function () {
     fileInput.click();
@@ -132,19 +160,100 @@
     });
   }
 
+  function renderExistingPreviews() {
+    if (!editingId || !existingImages.length) {
+      existingPreviewsWrap.style.display = 'none';
+      return;
+    }
+    existingPreviewsWrap.style.display = 'block';
+    existingPreviewsContainer.innerHTML = '';
+    existingImages.forEach(function (url, index) {
+      const div = document.createElement('div');
+      div.className = 'admin-preview';
+      div.innerHTML = '<img src="' + url + '" alt="Photo existante ' + (index + 1) + '"><button type="button" aria-label="Retirer">✕</button>';
+      div.querySelector('button').addEventListener('click', function () {
+        existingImages.splice(index, 1);
+        renderExistingPreviews();
+      });
+      existingPreviewsContainer.appendChild(div);
+    });
+  }
+
   // ==========================================================================
-  // 4. SOUMISSION DU FORMULAIRE (upload photos + insertion en base)
+  // 5. MODE ÉDITION (remplir le formulaire avec une annonce existante)
+  // ==========================================================================
+  function enterEditMode(row) {
+    editingId = row.id;
+    formTitle.textContent = 'Modifier l\'annonce';
+    submitBtn.textContent = 'Enregistrer les modifications';
+    cancelEditBtn.style.display = 'inline-flex';
+
+    document.getElementById('fieldTitle').value = row.title || '';
+    document.getElementById('fieldRef').value = row.ref || '';
+    document.getElementById('fieldType').value = row.type || 'villa';
+    document.getElementById('fieldOperation').value = row.operation || 'location';
+    document.getElementById('fieldFurnished').checked = !!row.furnished;
+    document.getElementById('fieldLocation').value = row.location || '';
+    document.getElementById('fieldDescription').value = row.description || '';
+
+    // Le montant est fiable (toujours numérique) ; le type de tarif est
+    // déduit du libellé enregistré (best-effort pour les anciennes annonces).
+    priceAmountInput.value = row.sort_price || '';
+    if (row.price_label && row.price_label.includes('/ mois')) priceFrequencySelect.value = 'month';
+    else if (row.price_label && row.price_label.includes('/ nuit')) priceFrequencySelect.value = 'night';
+    else if (row.price_label && row.price_label.includes('/ semaine')) priceFrequencySelect.value = 'week';
+    else priceFrequencySelect.value = 'fixed';
+    updatePricePreview();
+
+    conditionsContainer.innerHTML = '';
+    (row.conditions && row.conditions.length ? row.conditions : ['']).forEach(function (c) {
+      addConditionRow(c);
+    });
+
+    existingImages = (row.images || []).slice();
+    selectedFiles = [];
+    renderPreviews();
+    renderExistingPreviews();
+
+    formError.classList.remove('is-visible');
+    formSuccess.classList.remove('is-visible');
+    listingForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function exitEditMode() {
+    editingId = null;
+    formTitle.textContent = 'Ajouter une nouvelle annonce';
+    submitBtn.textContent = 'Publier l\'annonce';
+    cancelEditBtn.style.display = 'none';
+    existingImages = [];
+    selectedFiles = [];
+    listingForm.reset();
+    conditionsContainer.innerHTML = '';
+    addConditionRow('');
+    renderPreviews();
+    renderExistingPreviews();
+    updatePricePreview();
+  }
+
+  cancelEditBtn.addEventListener('click', exitEditMode);
+
+  // ==========================================================================
+  // 6. SOUMISSION DU FORMULAIRE (ajout OU modification)
   // ==========================================================================
   listingForm.addEventListener('submit', function (e) {
     e.preventDefault();
     formError.classList.remove('is-visible');
     formSuccess.classList.remove('is-visible');
 
-    if (!selectedFiles.length) {
+    const totalPhotos = existingImages.length + selectedFiles.length;
+    if (!totalPhotos) {
       formError.textContent = 'Ajoute au moins une photo avant de publier.';
       formError.classList.add('is-visible');
       return;
     }
+
+    const amount = priceAmountInput.value;
+    const frequency = priceFrequencySelect.value;
 
     const conditions = Array.from(document.querySelectorAll('.condition-input'))
       .map(function (input) { return input.value.trim(); })
@@ -157,8 +266,8 @@
       operation: document.getElementById('fieldOperation').value,
       furnished: document.getElementById('fieldFurnished').checked,
       location: document.getElementById('fieldLocation').value.trim(),
-      price_label: document.getElementById('fieldPriceLabel').value.trim(),
-      sort_price: Number(document.getElementById('fieldSortPrice').value) || 0,
+      price_label: formatPriceLabel(amount, frequency),
+      sort_price: Number(amount) || 0,
       description: document.getElementById('fieldDescription').value.trim(),
       conditions: conditions
     };
@@ -167,24 +276,25 @@
     submitSpinner.classList.add('is-visible');
 
     uploadAllPhotos(selectedFiles)
-      .then(function (urls) {
-        payload.images = urls;
+      .then(function (newUrls) {
+        payload.images = existingImages.concat(newUrls);
+        if (editingId) {
+          return sb.from('properties').update(payload).eq('id', editingId);
+        }
         return sb.from('properties').insert(payload);
       })
       .then(function (result) {
         if (result.error) throw result.error;
-        formSuccess.textContent = 'Annonce publiée avec succès ! Elle est déjà visible sur le site.';
+        formSuccess.textContent = editingId
+          ? 'Annonce mise à jour avec succès !'
+          : 'Annonce publiée avec succès ! Elle est déjà visible sur le site.';
         formSuccess.classList.add('is-visible');
-        listingForm.reset();
-        selectedFiles = [];
-        renderPreviews();
-        conditionsContainer.innerHTML = '';
-        addConditionRow('');
+        exitEditMode();
         loadListings();
       })
       .catch(function (err) {
         console.error(err);
-        formError.textContent = 'Une erreur est survenue lors de la publication. Réessaie.';
+        formError.textContent = 'Une erreur est survenue. Réessaie.';
         formError.classList.add('is-visible');
       })
       .finally(function () {
@@ -193,7 +303,6 @@
       });
   });
 
-  // Upload chaque photo vers Supabase Storage et retourne les URLs publiques
   // Compresse une image dans le navigateur avant upload (redimensionne à
   // 1600px de large max, réencode en JPEG qualité 0.8). Réduit le poids
   // d'une photo de téléphone (souvent 2-5 Mo) à environ 80-150 Ko, ce qui
@@ -202,7 +311,7 @@
   const JPEG_QUALITY = 0.8;
 
   function compressImage(file) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
       const img = new Image();
       const objectUrl = URL.createObjectURL(file);
 
@@ -223,14 +332,7 @@
         ctx.drawImage(img, 0, 0, width, height);
 
         canvas.toBlob(
-          function (blob) {
-            if (!blob) {
-              // En cas d'échec de compression, on retombe sur le fichier original
-              resolve(file);
-              return;
-            }
-            resolve(blob);
-          },
+          function (blob) { resolve(blob || file); },
           'image/jpeg',
           JPEG_QUALITY
         );
@@ -238,7 +340,6 @@
 
       img.onerror = function () {
         URL.revokeObjectURL(objectUrl);
-        // En cas d'échec de lecture, on retombe sur le fichier original
         resolve(file);
       };
 
@@ -253,8 +354,7 @@
         return sb.storage.from('property-images').upload(path, compressedBlob, { contentType: 'image/jpeg' })
           .then(function (result) {
             if (result.error) throw result.error;
-            const publicUrl = sb.storage.from('property-images').getPublicUrl(path).data.publicUrl;
-            return publicUrl;
+            return sb.storage.from('property-images').getPublicUrl(path).data.publicUrl;
           });
       });
     });
@@ -262,7 +362,7 @@
   }
 
   // ==========================================================================
-  // 5. LISTE DES ANNONCES AJOUTÉES (gestion / suppression)
+  // 7. LISTE DES ANNONCES AJOUTÉES (gestion : modifier / supprimer)
   // ==========================================================================
   function loadListings() {
     listingsList.innerHTML = '<p class="admin-empty">Chargement...</p>';
@@ -295,7 +395,12 @@
           '<p class="admin-listing-row__title">' + row.title + '</p>' +
           '<p class="admin-listing-row__meta">' + row.location + ' · ' + row.price_label + '</p>' +
         '</div>' +
+        '<button type="button" class="btn btn-outline-navy" style="padding:0.5rem 1rem; font-size: var(--fs-xs);">Modifier</button>' +
         '<button type="button" class="btn-delete">Supprimer</button>';
+
+      div.querySelector('.btn-outline-navy').addEventListener('click', function () {
+        enterEditMode(row);
+      });
 
       div.querySelector('.btn-delete').addEventListener('click', function () {
         if (!confirm('Supprimer définitivement cette annonce ?')) return;
@@ -304,6 +409,7 @@
             alert('Erreur lors de la suppression.');
             return;
           }
+          if (editingId === row.id) exitEditMode();
           loadListings();
         });
       });

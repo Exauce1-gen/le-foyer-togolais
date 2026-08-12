@@ -73,7 +73,7 @@
 
         <!-- ---------------- Formulaire d'ajout ---------------- -->
         <section class="admin-panel">
-          <h2>Ajouter une nouvelle annonce</h2>
+          <h2 id="formTitle">Ajouter une nouvelle annonce</h2>
 
           <p class="admin-error" id="formError"></p>
           <p class="admin-success" id="formSuccess"></p>
@@ -117,14 +117,22 @@
 
             <div class="admin-grid-2">
               <div class="admin-field">
-                <label for="fieldPriceLabel">Prix affiché *</label>
-                <input type="text" id="fieldPriceLabel" required placeholder="Ex: 350 000 FCFA / mois">
+                <label for="fieldPriceAmount">Montant *</label>
+                <input type="number" id="fieldPriceAmount" required placeholder="Ex: 350000" min="0">
               </div>
               <div class="admin-field">
-                <label for="fieldSortPrice">Prix (nombre, pour le tri) *</label>
-                <input type="number" id="fieldSortPrice" required placeholder="Ex: 350000">
+                <label for="fieldPriceFrequency">Type de tarif *</label>
+                <select id="fieldPriceFrequency" required>
+                  <option value="fixed">Prix fixe (vente)</option>
+                  <option value="month">FCFA / mois</option>
+                  <option value="night">FCFA / nuit</option>
+                  <option value="week">FCFA / semaine</option>
+                </select>
               </div>
             </div>
+            <p style="margin-top:-0.6rem; margin-bottom: var(--space-md); font-size: var(--fs-xs); color: var(--color-text-muted);">
+              Aperçu tel qu'affiché sur le site : <strong id="pricePreview">—</strong>
+            </p>
 
             <div class="admin-field">
               <label for="fieldRef">Référence (optionnel)</label>
@@ -144,6 +152,10 @@
 
             <div class="admin-field">
               <label>Photos du bien *</label>
+              <div id="existingPreviewsWrap" style="display:none;">
+                <p style="font-size: var(--fs-xs); color: var(--color-text-muted); margin-bottom:0.4rem;">Photos actuelles (clique sur ✕ pour en retirer) :</p>
+                <div class="admin-previews" id="existingPreviewsContainer"></div>
+              </div>
               <div class="admin-dropzone" id="dropzone">
                 <p class="admin-dropzone__text">Clique ici pour choisir une ou plusieurs photos</p>
                 <p class="admin-dropzone__text" style="margin-top:0.3rem; font-size: var(--fs-xs);">Les photos sont automatiquement optimisées avant l'envoi</p>
@@ -154,6 +166,7 @@
 
             <div class="admin-submit-row">
               <span class="admin-spinner" id="submitSpinner">Publication en cours...</span>
+              <button type="button" class="btn btn-outline-navy" id="cancelEditBtn" style="display:none;">Annuler la modification</button>
               <button type="submit" class="btn btn-primary" id="submitBtn">Publier l'annonce</button>
             </div>
 
