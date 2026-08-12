@@ -27,6 +27,12 @@
   const sortSelect = document.getElementById('propertiesSort');
 
   const IMG_BASE = 'assets/images/properties/';
+
+  // Les annonces statiques utilisent des chemins relatifs ("listing-01/01.jpg"),
+  // les annonces Supabase stockent déjà des URLs complètes (Supabase Storage).
+  function resolveImg(img) {
+    return /^https?:\/\//i.test(img) ? img : IMG_BASE + img;
+  }
   const LOCATION_ICON = '<svg viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-11.5a7 7 0 10-14 0C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>';
   const CHEVRON_LEFT = '<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const CHEVRON_RIGHT = '<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -39,13 +45,21 @@
   // Etat courant du slide affiché pour chaque carte, indexé par id d'annonce
   const slideIndex = {};
 
-  fetch('data/properties.json')
-    .then(function (res) {
+  // Charge les annonces statiques (data/properties.json, les 34 annonces
+  // d'origine) ET les annonces ajoutées depuis l'espace admin (Supabase),
+  // puis fusionne les deux listes. Si Supabase est indisponible, le site
+  // continue de fonctionner normalement avec seulement les annonces statiques.
+  Promise.all([
+    fetch('data/properties.json').then(function (res) {
       if (!res.ok) throw new Error('Impossible de charger les annonces');
       return res.json();
-    })
-    .then(function (data) {
-      properties = data;
+    }),
+    fetchSupabaseProperties()
+  ])
+    .then(function (results) {
+      const staticData = results[0];
+      const supabaseData = results[1];
+      properties = staticData.concat(supabaseData);
       properties.forEach(function (p) { slideIndex[p.id] = 0; });
       render();
     })
@@ -55,6 +69,49 @@
       if (venteGrid) venteGrid.innerHTML = msg;
       console.error(err);
     });
+
+  // Récupère les annonces ajoutées via l'espace admin (table Supabase
+  // "properties"), et les convertit au même format que les annonces
+  // statiques. En cas d'erreur (Supabase non configuré, hors ligne...),
+  // retourne un tableau vide plutôt que de bloquer l'affichage du site.
+  function fetchSupabaseProperties() {
+    if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_ANON_KEY === 'undefined') {
+      return Promise.resolve([]);
+    }
+    return fetch(SUPABASE_URL + '/rest/v1/properties?select=*&order=created_at.desc', {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: 'Bearer ' + SUPABASE_ANON_KEY
+      }
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Supabase indisponible');
+        return res.json();
+      })
+      .then(function (rows) {
+        return rows.map(function (row) {
+          return {
+            id: 'sb-' + row.id,
+            ref: row.ref,
+            title: row.title,
+            type: row.type,
+            operation: row.operation,
+            furnished: row.furnished,
+            location: row.location,
+            priceLabel: row.price_label,
+            sortPrice: row.sort_price,
+            description: row.description,
+            conditions: row.conditions || [],
+            dateAdded: row.date_added,
+            images: row.images || []
+          };
+        });
+      })
+      .catch(function (err) {
+        console.warn('Annonces Supabase non chargées :', err);
+        return [];
+      });
+  }
 
   // ---------- Filtrage (type/meublé) + recherche combinés, sans le operation (gere separement) ----------
   function getFiltered(operation) {
@@ -131,7 +188,7 @@
     const slidesHtml = property.images.map(function (img, i) {
       // Seule la première image charge en priorité ; les suivantes sont en lazy loading
       const loadingAttr = i === 0 ? '' : ' loading="lazy"';
-      return '<div class="property-card__slide"><img src="' + IMG_BASE + img + '" alt="' + property.title + ' - photo ' + (i + 1) + '"' + loadingAttr + ' width="400" height="300"></div>';
+      return '<div class="property-card__slide"><img src="' + resolveImg(img) + '" alt="' + property.title + ' - photo ' + (i + 1) + '"' + loadingAttr + ' width="400" height="300"></div>';
     }).join('');
 
     const whatsappMessage = encodeURIComponent(
@@ -269,7 +326,7 @@
   function renderLightbox() {
     if (!lbProperty) return;
     const total = lbProperty.images.length;
-    lbMediaWrap.innerHTML = '<img src="' + IMG_BASE + lbProperty.images[lbIndex] + '" alt="' + lbProperty.title + '">';
+    lbMediaWrap.innerHTML = '<img src="' + resolveImg(lbProperty.images[lbIndex]) + '" alt="' + lbProperty.title + '">';
     lbCaption.textContent = lbProperty.title + ' — ' + lbProperty.location + ' (' + (lbIndex + 1) + '/' + total + ')';
     // Synchronise aussi le carrousel de la carte pour rester cohérent en refermant la lightbox
     slideIndex[lbProperty.id] = lbIndex;

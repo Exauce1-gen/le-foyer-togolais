@@ -21,21 +21,58 @@
   const IMG_BASE = 'assets/images/properties/';
   const ZOOM_ICON = '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>';
 
+  // Les annonces statiques utilisent des chemins relatifs, les annonces
+  // Supabase stockent déjà des URLs complètes (Supabase Storage).
+  function resolveImg(img) {
+    return /^https?:\/\//i.test(img) ? img : IMG_BASE + img;
+  }
+
+  function fetchSupabaseProperties() {
+    if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_ANON_KEY === 'undefined') {
+      return Promise.resolve([]);
+    }
+    return fetch(SUPABASE_URL + '/rest/v1/properties?select=*&order=created_at.desc', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Supabase indisponible');
+        return res.json();
+      })
+      .then(function (rows) {
+        return rows.map(function (row) {
+          return {
+            title: row.title,
+            location: row.location,
+            type: row.type,
+            operation: row.operation,
+            images: row.images || []
+          };
+        });
+      })
+      .catch(function (err) {
+        console.warn('Photos Supabase non chargées :', err);
+        return [];
+      });
+  }
+
   let allPhotos = [];      // toutes les photos, à plat, avec leurs métadonnées d'annonce
   let filteredPhotos = [];
   let currentFilter = 'all';
 
-  fetch('data/properties.json')
-    .then(function (res) {
+  Promise.all([
+    fetch('data/properties.json').then(function (res) {
       if (!res.ok) throw new Error('Impossible de charger la galerie');
       return res.json();
-    })
-    .then(function (data) {
+    }),
+    fetchSupabaseProperties()
+  ])
+    .then(function (results) {
+      const allProperties = results[0].concat(results[1]);
       // Transforme chaque annonce en N photos individuelles pour la galerie
-      data.forEach(function (property) {
+      allProperties.forEach(function (property) {
         property.images.forEach(function (img, i) {
           allPhotos.push({
-            src: IMG_BASE + img,
+            src: resolveImg(img),
             title: property.title,
             location: property.location,
             type: property.type,

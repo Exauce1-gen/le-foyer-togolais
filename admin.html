@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Espace Admin | Le Foyer Togolais</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body class="admin-body">
+
+  <!-- ==========================================================================
+       EN-TÊTE SIMPLE (pas de navigation publique ici)
+       ========================================================================== -->
+  <header class="admin-header">
+    <div class="container admin-header__inner">
+      <div class="logo">
+        <img src="assets/images/logo/logo-icon.png" alt="Logo Le Foyer Togolais" class="logo__icon" width="40" height="40">
+        <span class="logo__text">
+          <span class="logo__name">Le Foyer Togolais</span>
+          <span class="logo__baseline">Immobilier &amp; Gestion</span>
+        </span>
+      </div>
+      <span class="admin-header__title">Espace de gestion des annonces</span>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="container">
+
+      <!-- ==========================================================================
+           ECRAN DE CONNEXION
+           ========================================================================== -->
+      <section class="admin-login" id="adminLogin">
+        <h1>Connexion</h1>
+        <p>Connecte-toi pour ajouter ou gérer les annonces du site.</p>
+
+        <p class="admin-error" id="loginError"></p>
+
+        <form id="loginForm">
+          <div class="admin-field">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" required autocomplete="username">
+          </div>
+          <div class="admin-field">
+            <label for="loginPassword">Mot de passe</label>
+            <input type="password" id="loginPassword" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Se connecter</button>
+        </form>
+      </section>
+
+      <!-- ==========================================================================
+           TABLEAU DE BORD (visible uniquement une fois connecté)
+           ========================================================================== -->
+      <div class="admin-dashboard" id="adminDashboard">
+
+        <div style="display:flex; justify-content:flex-end; margin-bottom: var(--space-md);">
+          <button type="button" class="btn btn-outline-navy" id="logoutBtn">Se déconnecter</button>
+        </div>
+
+        <!-- ---------------- Formulaire d'ajout ---------------- -->
+        <section class="admin-panel">
+          <h2>Ajouter une nouvelle annonce</h2>
+
+          <p class="admin-error" id="formError"></p>
+          <p class="admin-success" id="formSuccess"></p>
+
+          <form id="listingForm">
+
+            <div class="admin-field">
+              <label for="fieldTitle">Titre de l'annonce *</label>
+              <input type="text" id="fieldTitle" required placeholder="Ex: Villa meublée avec piscine">
+            </div>
+
+            <div class="admin-grid-2">
+              <div class="admin-field">
+                <label for="fieldType">Type de bien *</label>
+                <select id="fieldType" required>
+                  <option value="villa">Villa</option>
+                  <option value="appartement">Appartement</option>
+                  <option value="terrain">Terrain</option>
+                  <option value="boutique">Boutique</option>
+                  <option value="bureau">Bureau</option>
+                </select>
+              </div>
+              <div class="admin-field">
+                <label for="fieldOperation">Opération *</label>
+                <select id="fieldOperation" required>
+                  <option value="location">Location</option>
+                  <option value="vente">Vente</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-field admin-checkbox">
+              <input type="checkbox" id="fieldFurnished">
+              <label for="fieldFurnished" style="margin:0;">Ce bien est meublé</label>
+            </div>
+
+            <div class="admin-field">
+              <label for="fieldLocation">Quartier / Localisation *</label>
+              <input type="text" id="fieldLocation" required placeholder="Ex: Agoè Nyivé">
+            </div>
+
+            <div class="admin-grid-2">
+              <div class="admin-field">
+                <label for="fieldPriceLabel">Prix affiché *</label>
+                <input type="text" id="fieldPriceLabel" required placeholder="Ex: 350 000 FCFA / mois">
+              </div>
+              <div class="admin-field">
+                <label for="fieldSortPrice">Prix (nombre, pour le tri) *</label>
+                <input type="number" id="fieldSortPrice" required placeholder="Ex: 350000">
+              </div>
+            </div>
+
+            <div class="admin-field">
+              <label for="fieldRef">Référence (optionnel)</label>
+              <input type="text" id="fieldRef" placeholder="Ex: AN042-0826">
+            </div>
+
+            <div class="admin-field">
+              <label for="fieldDescription">Description</label>
+              <textarea id="fieldDescription" placeholder="Décris le bien : nombre de chambres, équipements, atouts..."></textarea>
+            </div>
+
+            <div class="admin-field">
+              <label>Conditions (caution, avance, visite...)</label>
+              <div class="admin-conditions" id="conditionsContainer"></div>
+              <button type="button" class="admin-add-condition" id="addConditionBtn">+ Ajouter une condition</button>
+            </div>
+
+            <div class="admin-field">
+              <label>Photos du bien *</label>
+              <div class="admin-dropzone" id="dropzone">
+                <p class="admin-dropzone__text">Clique ici pour choisir une ou plusieurs photos</p>
+                <input type="file" id="fileInput" accept="image/*" multiple>
+              </div>
+              <div class="admin-previews" id="previewsContainer"></div>
+            </div>
+
+            <div class="admin-submit-row">
+              <span class="admin-spinner" id="submitSpinner">Publication en cours...</span>
+              <button type="submit" class="btn btn-primary" id="submitBtn">Publier l'annonce</button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- ---------------- Liste de gestion ---------------- -->
+        <section class="admin-panel">
+          <h2>Annonces ajoutées depuis cet espace</h2>
+          <div id="listingsList">
+            <p class="admin-empty">Chargement...</p>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/admin.js"></script>
+
+</body>
+</html>

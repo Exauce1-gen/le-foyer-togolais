@@ -1,0 +1,347 @@
+/* ==========================================================================
+   ADMIN.CSS
+   Styles de l'espace admin : écran de connexion, formulaire d'ajout
+   d'annonce, liste de gestion des annonces déjà publiées via cet espace.
+   Réutilise les tokens de variables.css pour rester cohérent avec le site.
+   ========================================================================== */
+
+.admin-body {
+  background-color: var(--color-off-white);
+  min-height: 100vh;
+}
+
+.admin-header {
+  background-color: var(--color-navy);
+  padding: var(--space-sm) 0;
+}
+
+.admin-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-header .logo__icon {
+  width: 40px;
+  height: 40px;
+}
+
+.admin-header .logo__name {
+  color: var(--color-white);
+  font-size: 1rem;
+}
+
+.admin-header .logo__baseline {
+  color: var(--color-gold-light);
+}
+
+.admin-header__title {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+
+.admin-main {
+  padding-block: var(--space-xl);
+}
+
+/* ---------- Ecran de connexion ---------- */
+.admin-login {
+  max-width: 420px;
+  margin-inline: auto;
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-xl) var(--space-lg);
+  margin-top: var(--space-2xl);
+}
+
+.admin-login h1 {
+  font-size: var(--fs-xl);
+  text-align: center;
+  margin-bottom: var(--space-xs);
+}
+
+.admin-login p {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.admin-field {
+  margin-bottom: var(--space-md);
+}
+
+.admin-field label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-navy);
+  margin-bottom: 0.4rem;
+}
+
+.admin-field input,
+.admin-field select,
+.admin-field textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: var(--fs-base);
+  font-family: var(--font-body);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-off-white);
+  transition: border-color var(--transition-fast);
+}
+
+.admin-field input:focus,
+.admin-field select:focus,
+.admin-field textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.admin-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-checkbox input {
+  width: auto;
+}
+
+.admin-error {
+  display: none;
+  background-color: rgba(192, 57, 43, 0.1);
+  color: var(--color-error);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-md);
+}
+
+.admin-error.is-visible {
+  display: block;
+}
+
+.admin-success {
+  display: none;
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--color-success);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-md);
+}
+
+.admin-success.is-visible {
+  display: block;
+}
+
+/* ---------- Tableau de bord (apres connexion) ---------- */
+.admin-dashboard {
+  display: none;
+}
+
+.admin-dashboard.is-visible {
+  display: block;
+}
+
+.admin-panel {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.admin-panel h2 {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-md);
+}
+
+.admin-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.admin-conditions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.admin-condition-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-condition-row input {
+  flex: 1;
+}
+
+.admin-condition-row button {
+  flex-shrink: 0;
+  width: 40px;
+  color: var(--color-error);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.admin-add-condition {
+  font-size: var(--fs-sm);
+  color: var(--color-gold-dark);
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- Zone d'upload de photos ---------- */
+.admin-dropzone {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+  margin-bottom: var(--space-md);
+}
+
+.admin-dropzone:hover {
+  border-color: var(--color-gold);
+}
+
+.admin-dropzone input {
+  display: none;
+}
+
+.admin-dropzone__text {
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.admin-previews {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: var(--space-md);
+}
+
+.admin-preview {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.admin-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-preview button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  background-color: rgba(6, 20, 40, 0.75);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ---------- Liste des annonces gerees ---------- */
+.admin-listing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-listing-row:last-child {
+  border-bottom: none;
+}
+
+.admin-listing-row img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.admin-listing-row__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-listing-row__title {
+  font-weight: var(--fw-semibold);
+  color: var(--color-navy);
+  font-size: var(--fs-sm);
+}
+
+.admin-listing-row__meta {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.admin-listing-row .btn-delete {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  font-size: var(--fs-xs);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-full);
+}
+
+.admin-listing-row .btn-delete:hover {
+  background-color: var(--color-error);
+  color: var(--color-white);
+}
+
+.admin-empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  padding: var(--space-md) 0;
+}
+
+.admin-submit-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+.admin-spinner {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.admin-spinner.is-visible {
+  display: flex;
+}
+
+@media (max-width: 640px) {
+  .admin-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .admin-login {
+    margin-top: var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
+  }
+}

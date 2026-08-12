@@ -1,5 +1,6 @@
 # robots.txt - Le Foyer Togolais
 User-agent: *
 Allow: /
+Disallow: /admin.html
 
 Sitemap: https://lefoyertogolais.com/sitemap.xml
