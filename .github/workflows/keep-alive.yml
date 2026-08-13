@@ -1,0 +1,31 @@
+# ==========================================================================
+# KEEP-ALIVE.YML
+# Envoie une requête de lecture légère à Supabase une fois par jour, pour
+# que le projet ne soit jamais mis en pause pour inactivité (le plan
+# gratuit Supabase pause un projet après 7 jours sans requête).
+# Peut aussi être lancé manuellement depuis l'onglet "Actions" du dépôt.
+# ==========================================================================
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # tous les jours à 06:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase (lecture légère, compte comme activité)
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://bqmkuprudbgmmgjobaas.supabase.co/rest/v1/property_views?select=property_id&limit=1" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxbWt1cHJ1ZGJnbW1nam9iYWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0Njg3MjksImV4cCI6MjEwMjA0NDcyOX0._Ugkda0DL8g2OQyqOFUrfMfy3cGdgVatAYrK_90d5ns" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxbWt1cHJ1ZGJnbW1nam9iYWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0Njg3MjksImV4cCI6MjEwMjA0NDcyOX0._Ugkda0DL8g2OQyqOFUrfMfy3cGdgVatAYrK_90d5ns")
+          echo "Reponse Supabase : HTTP $STATUS"
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ]; then
+            echo "OK - projet garde actif"
+          else
+            echo "ATTENTION : reponse inattendue de Supabase"
+            exit 1
+          fi
