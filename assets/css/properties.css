@@ -350,12 +350,37 @@
 }
 
 .property-card__type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   font-size: var(--fs-xs);
   font-weight: var(--fw-semibold);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--color-gold-dark);
   margin-bottom: 0.3rem;
+}
+
+.property-card__views {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.property-card__views svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--color-text-muted);
+  fill: none;
+  stroke-width: 1.8;
+}
 }
 
 .property-card__title {

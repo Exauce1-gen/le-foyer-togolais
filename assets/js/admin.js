@@ -367,10 +367,15 @@
   function loadListings() {
     listingsList.innerHTML = '<p class="admin-empty">Chargement...</p>';
 
-    sb.from('properties').select('*').order('created_at', { ascending: false })
-      .then(function (result) {
-        if (result.error) throw result.error;
-        renderListings(result.data);
+    Promise.all([
+      sb.from('properties').select('*').order('created_at', { ascending: false }),
+      sb.from('property_views').select('property_id,views')
+    ])
+      .then(function (results) {
+        if (results[0].error) throw results[0].error;
+        const viewsMap = {};
+        (results[1].data || []).forEach(function (row) { viewsMap[row.property_id] = row.views; });
+        renderListings(results[0].data, viewsMap);
       })
       .catch(function (err) {
         console.error(err);
@@ -378,7 +383,7 @@
       });
   }
 
-  function renderListings(rows) {
+  function renderListings(rows, viewsMap) {
     if (!rows.length) {
       listingsList.innerHTML = '<p class="admin-empty">Aucune annonce ajoutée pour l\'instant depuis cet espace.</p>';
       return;
@@ -387,13 +392,14 @@
     listingsList.innerHTML = '';
     rows.forEach(function (row) {
       const thumb = (row.images && row.images[0]) || '';
+      const views = (viewsMap && viewsMap['sb-' + row.id]) || 0;
       const div = document.createElement('div');
       div.className = 'admin-listing-row';
       div.innerHTML =
         (thumb ? '<img src="' + thumb + '" alt="">' : '') +
         '<div class="admin-listing-row__info">' +
           '<p class="admin-listing-row__title">' + row.title + '</p>' +
-          '<p class="admin-listing-row__meta">' + row.location + ' · ' + row.price_label + '</p>' +
+          '<p class="admin-listing-row__meta">' + row.location + ' · ' + row.price_label + ' · 👁 ' + views + ' vue' + (views === 1 ? '' : 's') + '</p>' +
         '</div>' +
         '<div class="admin-listing-row__actions">' +
           '<button type="button" class="btn btn-outline-navy" style="padding:0.5rem 1rem; font-size: var(--fs-xs);">Modifier</button>' +

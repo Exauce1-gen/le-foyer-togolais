@@ -54,13 +54,18 @@
       if (!res.ok) throw new Error('Impossible de charger les annonces');
       return res.json();
     }),
-    fetchSupabaseProperties()
+    fetchSupabaseProperties(),
+    fetchViewCounts()
   ])
     .then(function (results) {
       const staticData = results[0];
       const supabaseData = results[1];
+      const viewCounts = results[2];
       properties = staticData.concat(supabaseData);
-      properties.forEach(function (p) { slideIndex[p.id] = 0; });
+      properties.forEach(function (p) {
+        slideIndex[p.id] = 0;
+        p.views = viewCounts[p.id] || 0;
+      });
       render();
     })
     .catch(function (err) {
@@ -74,6 +79,27 @@
   // "properties"), et les convertit au même format que les annonces
   // statiques. En cas d'erreur (Supabase non configuré, hors ligne...),
   // retourne un tableau vide plutôt que de bloquer l'affichage du site.
+  // Récupère le nombre de vues de toutes les annonces (table Supabase
+  // "property_views") sous forme d'un objet { idAnnonce: nombreDeVues }.
+  function fetchViewCounts() {
+    if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_ANON_KEY === 'undefined') {
+      return Promise.resolve({});
+    }
+    return fetch(SUPABASE_URL + '/rest/v1/property_views?select=property_id,views', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Compteurs de vues indisponibles');
+        return res.json();
+      })
+      .then(function (rows) {
+        const map = {};
+        rows.forEach(function (row) { map[row.property_id] = row.views; });
+        return map;
+      })
+      .catch(function () { return {}; });
+  }
+
   function fetchSupabaseProperties() {
     if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_ANON_KEY === 'undefined') {
       return Promise.resolve([]);
@@ -214,7 +240,9 @@
         ) : '') +
       '</div>' +
       '<div class="property-card__body">' +
-        '<p class="property-card__type">' + typeLabel(property.type) + (property.ref ? ' · Réf. ' + property.ref : '') + '</p>' +
+        '<p class="property-card__type">' + typeLabel(property.type) + (property.ref ? ' · Réf. ' + property.ref : '') +
+          '<span class="property-card__views"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg><span data-role="views-count">' + (property.views || 0) + '</span> vue' + (property.views === 1 ? '' : 's') + '</span>' +
+        '</p>' +
         '<h3 class="property-card__title">' + property.title + '</h3>' +
         '<p class="property-card__location">' + LOCATION_ICON + ' ' + property.location + '</p>' +
         '<div class="property-card__footer">' +
@@ -315,6 +343,39 @@
     renderLightbox();
     lightbox.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    registerView(property.id);
+  }
+
+  // Incremente le compteur de vues de l'annonce (une seule fois par visite,
+  // via sessionStorage, pour eviter qu'un simple double-clic ne gonfle le
+  // chiffre). Echoue silencieusement si Supabase est indisponible.
+  function registerView(propertyId) {
+    if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_ANON_KEY === 'undefined') return;
+
+    const seenKey = 'viewed_' + propertyId;
+    if (sessionStorage.getItem(seenKey)) return;
+    sessionStorage.setItem(seenKey, '1');
+
+    fetch(SUPABASE_URL + '/rest/v1/rpc/increment_property_view', {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ p_id: propertyId })
+    })
+      .then(function () {
+        // Met a jour l'affichage localement sans recharger toute la grille
+        const counterEl = document.querySelector('.property-card[data-id="' + propertyId + '"] [data-role="views-count"]');
+        if (counterEl) {
+          const current = parseInt(counterEl.textContent, 10) || 0;
+          counterEl.textContent = current + 1;
+        }
+      })
+      .catch(function (err) {
+        console.warn('Compteur de vues non mis a jour :', err);
+      });
   }
 
   function closeLightbox() {
