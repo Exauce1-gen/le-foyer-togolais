@@ -395,10 +395,11 @@
           '<p class="admin-listing-row__title">' + row.title + '</p>' +
           '<p class="admin-listing-row__meta">' + row.location + ' · ' + row.price_label + '</p>' +
         '</div>' +
-        '<button type="button" class="btn btn-outline-navy" style="padding:0.5rem 1rem; font-size: var(--fs-xs);">Modifier</button>' +
-        '<button type="button" class="btn-delete">Supprimer</button>';
-
-      div.querySelector('.btn-outline-navy').addEventListener('click', function () {
+        '<div class="admin-listing-row__actions">' +
+          '<button type="button" class="btn btn-outline-navy" style="padding:0.5rem 1rem; font-size: var(--fs-xs);">Modifier</button>' +
+          '<button type="button" class="btn-delete">Supprimer</button>' +
+        '</div>';
+div.querySelector('.btn-outline-navy').addEventListener('click', function () {
         enterEditMode(row);
       });
 
