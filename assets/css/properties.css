@@ -381,6 +381,112 @@
   fill: none;
   stroke-width: 1.8;
 }
+
+/* ---------- Bouton de partage (icône ronde, en haut à droite de la photo) ---------- */
+.property-card__share {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(6, 20, 40, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.property-card__share:hover {
+  background-color: var(--color-gold);
+  transform: scale(1.08);
+}
+
+.property-card__share svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--color-white);
+  fill: none;
+  stroke-width: 1.8;
+}
+
+.property-card__share:hover svg {
+  stroke: var(--color-navy);
+}
+
+/* ---------- Menu de partage de secours (desktop, navigateurs sans Web Share API) ---------- */
+.share-menu {
+  position: fixed;
+  z-index: var(--z-modal);
+  width: 200px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.share-menu a,
+.share-menu button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-navy);
+  text-align: left;
+  width: 100%;
+  transition: background-color var(--transition-fast);
+}
+
+.share-menu a:hover,
+.share-menu button:hover {
+  background-color: var(--color-off-white);
+}
+
+.share-menu svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--color-gold-dark);
+  flex-shrink: 0;
+}
+
+.share-menu button svg {
+  fill: none;
+  stroke: var(--color-gold-dark);
+  stroke-width: 2;
+}
+
+/* Sur mobile, le menu de secours est peu susceptible d'apparaître (Web Share
+   API est largement supportée), mais on le rend quand meme plus large et
+   plus facile à toucher au cas où. */
+@media (max-width: 480px) {
+  .share-menu {
+    width: min(240px, calc(100vw - 24px));
+  }
+  .share-menu a,
+  .share-menu button {
+    padding: 0.75rem 0.8rem;
+    font-size: var(--fs-base);
+  }
+}
+
+/* ---------- Effet de surbrillance quand on arrive via un lien partagé ---------- */
+.property-card--highlight {
+  animation: shareHighlight 2.6s ease;
+}
+
+@keyframes shareHighlight {
+  0% { box-shadow: 0 0 0 0 rgba(198, 150, 90, 0); }
+  15% { box-shadow: 0 0 0 4px var(--color-gold); }
+  100% { box-shadow: 0 0 0 0 rgba(198, 150, 90, 0); }
+}
 }
 
 .property-card__title {

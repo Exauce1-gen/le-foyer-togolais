@@ -67,6 +67,7 @@
         p.views = viewCounts[p.id] || 0;
       });
       render();
+      openSharedListingIfAny();
     })
     .catch(function (err) {
       const msg = '<p style="grid-column:1/-1;text-align:center;color:var(--color-text-muted);">Les annonces n\'ont pas pu être chargées. Réessayez plus tard.</p>';
@@ -233,6 +234,9 @@
         '</div>' +
         '<span class="property-card__badge property-card__badge--' + property.operation + '">' + (property.operation === 'vente' ? 'À vendre' : 'À louer') + '</span>' +
         furnishedBadge +
+        '<button class="property-card__share" data-role="share" aria-label="Partager cette annonce" title="Partager">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 3.9M15.4 6.6L8.6 10.5" stroke-linecap="round"/></svg>' +
+        '</button>' +
         (total > 1 ? (
           '<button class="property-card__nav property-card__nav--prev" data-role="prev" aria-label="Photo précédente">' + CHEVRON_LEFT + '</button>' +
           '<button class="property-card__nav property-card__nav--next" data-role="next" aria-label="Photo suivante">' + CHEVRON_RIGHT + '</button>' +
@@ -291,7 +295,121 @@
       openLightbox(property, slideIndex[property.id]);
     });
 
+    // --- Bouton de partage ---
+    const shareBtn = card.querySelector('[data-role="share"]');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        handleShare(property, shareBtn);
+      });
+    }
+
     return card;
+  }
+
+  // ==========================================================================
+  // PARTAGE : Web Share API (natif mobile) + menu de secours (desktop)
+  // ==========================================================================
+  function buildShareUrl(property) {
+    return location.origin + location.pathname + '?annonce=' + encodeURIComponent(property.id);
+  }
+
+  function buildShareText(property) {
+    return property.title + ' — ' + property.priceLabel + ' (' + property.location + ')';
+  }
+
+  function handleShare(property, anchorEl) {
+    const url = buildShareUrl(property);
+    const text = buildShareText(property);
+
+    // Sur mobile (et navigateurs compatibles) : menu de partage natif du
+    // téléphone, avec WhatsApp/Instagram/Facebook/SMS déjà proposés par l'OS.
+    if (navigator.share) {
+      navigator.share({ title: property.title, text: text, url: url }).catch(function () {
+        // L'utilisateur a annulé le partage : rien à faire.
+      });
+      return;
+    }
+
+    // Sur desktop (ou navigateurs sans Web Share API) : petit menu de secours.
+    openShareMenu(property, anchorEl, url, text);
+  }
+
+  let shareMenuEl = null;
+
+  function closeShareMenu() {
+    if (shareMenuEl) {
+      shareMenuEl.remove();
+      shareMenuEl = null;
+      document.removeEventListener('click', closeShareMenu);
+    }
+  }
+
+  function openShareMenu(property, anchorEl, url, text) {
+    closeShareMenu();
+
+    const menu = document.createElement('div');
+    menu.className = 'share-menu';
+    menu.innerHTML =
+      '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '" target="_blank" rel="noopener noreferrer">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5H16l.5-3.5h-3V7.7c0-1 .3-1.7 1.7-1.7H16.5V2.8C16 2.7 15 2.6 13.9 2.6c-2.4 0-4.1 1.5-4.1 4.2v2.4H7.3v3.5h2.5V21h3.7z"/></svg>' +
+        'Facebook' +
+      '</a>' +
+      '<a href="https://wa.me/?text=' + encodeURIComponent(text + ' ' + url) + '" target="_blank" rel="noopener noreferrer">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm4.52 14.13c-.25 0-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-1.02-.05-1.15.31-1.15 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74 1.66.72 2.31.65 2.97.54.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.23-.17-.48-.29z"/></svg>' +
+        'WhatsApp' +
+      '</a>' +
+      '<button type="button" data-role="copy-link">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '<span data-role="copy-label">Copier le lien</span>' +
+      '</button>';
+
+    document.body.appendChild(menu);
+
+    // Positionnement : sous le bouton, ajusté pour ne jamais déborder de
+    // l'écran (important sur mobile où l'espace est limité).
+    const rect = anchorEl.getBoundingClientRect();
+    const menuWidth = 200;
+    let left = rect.right - menuWidth;
+    left = Math.max(8, Math.min(left, window.innerWidth - menuWidth - 8));
+    let top = rect.bottom + 8;
+    if (top + 160 > window.innerHeight) {
+      top = rect.top - 168; // pas assez de place en bas -> ouvre vers le haut
+    }
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
+
+    menu.querySelector('[data-role="copy-link"]').addEventListener('click', function () {
+      copyToClipboard(url).then(function () {
+        const label = menu.querySelector('[data-role="copy-label"]');
+        label.textContent = 'Lien copié !';
+        setTimeout(closeShareMenu, 900);
+      });
+    });
+
+    menu.addEventListener('click', function (e) { e.stopPropagation(); });
+    shareMenuEl = menu;
+
+    // Ferme le menu si on clique n'importe où ailleurs
+    setTimeout(function () {
+      document.addEventListener('click', closeShareMenu);
+    }, 0);
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    // Solution de secours pour les tres anciens navigateurs
+    return new Promise(function (resolve) {
+      const input = document.createElement('input');
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      resolve();
+    });
   }
 
   // ---------- Filtres ----------
@@ -428,4 +546,23 @@
     if (e.key === 'ArrowRight') lbNextFn();
     if (e.key === 'ArrowLeft') lbPrevFn();
   });
+
+  // ==========================================================================
+  // Ouvre directement l'annonce ciblée quand le site est chargé depuis un
+  // lien partagé (ex: lefoyertogolais.com/?annonce=listing-12)
+  // ==========================================================================
+  function openSharedListingIfAny() {
+    const params = new URLSearchParams(location.search);
+    const targetId = params.get('annonce');
+    if (!targetId) return;
+
+    // Laisse le temps au DOM de finir de s'afficher avant de scroller
+    setTimeout(function () {
+      const card = document.querySelector('.property-card[data-id="' + targetId + '"]');
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('property-card--highlight');
+      setTimeout(function () { card.classList.remove('property-card--highlight'); }, 2600);
+    }, 300);
+  }
 })();
