@@ -787,11 +787,14 @@
 /* ---------- Tablette / Desktop : panneau centré au lieu du plein écran ---------- */
 @media (min-width: 720px) {
   .detail-modal__panel {
-    inset: 0;
-    width: min(680px, 92vw);
-    height: min(85vh, 800px);
+    inset: auto;
     top: 50%;
     left: 50%;
+    right: auto;
+    bottom: auto;
+    margin: 0;
+    width: min(680px, 92vw);
+    height: min(85vh, 800px);
     transform: translate(-50%, -50%);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
