@@ -322,16 +322,23 @@
     const url = buildShareUrl(property);
     const text = buildShareText(property);
 
-    // Sur mobile (et navigateurs compatibles) : menu de partage natif du
-    // téléphone, avec WhatsApp/Instagram/Facebook/SMS déjà proposés par l'OS.
-    if (navigator.share) {
-      navigator.share({ title: property.title, text: text, url: url }).catch(function () {
-        // L'utilisateur a annulé le partage : rien à faire.
+    // Le partage natif (menu de l'OS) n'est fiable que sur mobile/tactile.
+    // Sur desktop, certains navigateurs exposent navigator.share mais se
+    // comportent de façon peu fiable (rien ne s'affiche) : on force donc
+    // le menu personnalisé sur les écrans non tactiles.
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+
+    if (isTouchDevice && navigator.share) {
+      navigator.share({ title: property.title, text: text, url: url }).catch(function (err) {
+        // AbortError = l'utilisateur a simplement annulé le partage, rien à faire.
+        // Toute autre erreur -> on propose le menu de secours à la place.
+        if (err && err.name !== 'AbortError') {
+          openShareMenu(property, anchorEl, url, text);
+        }
       });
       return;
     }
 
-    // Sur desktop (ou navigateurs sans Web Share API) : petit menu de secours.
     openShareMenu(property, anchorEl, url, text);
   }
 
