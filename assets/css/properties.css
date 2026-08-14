@@ -504,6 +504,21 @@
   margin-bottom: var(--space-sm);
 }
 
+.property-card__details-link {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold-dark);
+  margin-bottom: var(--space-sm);
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.property-card__details-link:hover {
+  color: var(--color-navy);
+  text-decoration: underline;
+}
+
 .property-card__location svg {
   width: 14px;
   height: 14px;
@@ -567,5 +582,222 @@
   }
   .properties__sort select {
     flex: 1;
+  }
+}
+
+/* ==========================================================================
+   FENÊTRE DE DÉTAILS D'ANNONCE (photo + description complète + conditions)
+   Pensée mobile d'abord : plein écran sur téléphone, panneau centré sur
+   grand écran.
+   ========================================================================== */
+.detail-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: none;
+}
+
+.detail-modal.is-open {
+  display: block;
+}
+
+.detail-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(6, 10, 20, 0.7);
+}
+
+.detail-modal__panel {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgba(6, 20, 40, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-modal__close svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-white);
+  fill: none;
+  stroke-width: 2.2;
+}
+
+.detail-modal__scroll {
+  overflow-y: auto;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- Galerie (photo principale + vignettes) ---------- */
+.detail-modal__main {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-off-white);
+}
+
+.detail-modal__main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.detail-modal__thumbs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.7rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.detail-modal__thumb {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast), border-color var(--transition-fast);
+}
+
+.detail-modal__thumb.is-active {
+  opacity: 1;
+  border-color: var(--color-gold);
+}
+
+.detail-modal__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Contenu texte ---------- */
+.detail-modal__content {
+  padding: var(--space-md) var(--space-md) var(--space-xl);
+}
+
+.detail-modal__badge {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gold-dark);
+  margin-bottom: 0.3rem;
+}
+
+.detail-modal__title {
+  font-size: var(--fs-xl);
+  margin-bottom: 0.3rem;
+}
+
+.detail-modal__location {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.detail-modal__location svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--color-gold-dark);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.detail-modal__price {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-2xl);
+  color: var(--color-navy);
+  margin-bottom: var(--space-md);
+}
+
+.detail-modal__cta {
+  margin-bottom: var(--space-lg);
+}
+
+.detail-modal__cta .btn {
+  width: 100%;
+  padding: 1rem;
+}
+
+.detail-modal__heading {
+  font-size: var(--fs-md);
+  color: var(--color-navy);
+  margin-bottom: var(--space-xs);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.detail-modal__description {
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-primary);
+  white-space: pre-line;
+  margin-bottom: var(--space-md);
+}
+
+.detail-modal__conditions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-modal__conditions li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: var(--fs-sm);
+  color: var(--color-text-primary);
+}
+
+.detail-modal__conditions li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-gold-dark);
+  font-weight: var(--fw-bold);
+}
+
+/* ---------- Tablette / Desktop : panneau centré au lieu du plein écran ---------- */
+@media (min-width: 720px) {
+  .detail-modal__panel {
+    inset: 0;
+    width: min(680px, 92vw);
+    height: min(85vh, 800px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .detail-modal__main {
+    aspect-ratio: 16 / 9;
   }
 }

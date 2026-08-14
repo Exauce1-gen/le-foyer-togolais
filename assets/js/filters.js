@@ -249,6 +249,7 @@
         '</p>' +
         '<h3 class="property-card__title">' + property.title + '</h3>' +
         '<p class="property-card__location">' + LOCATION_ICON + ' ' + property.location + '</p>' +
+        '<button type="button" class="property-card__details-link" data-role="details">Voir les détails et la description →</button>' +
         '<div class="property-card__footer">' +
           '<span class="property-card__price">' + property.priceLabel + '</span>' +
           '<a href="https://wa.me/22873079423?text=' + whatsappMessage + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">' +
@@ -301,6 +302,15 @@
       shareBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         handleShare(property, shareBtn);
+      });
+    }
+
+    // --- Bouton "Voir les détails" (description complète, conditions...) ---
+    const detailsBtn = card.querySelector('[data-role="details"]');
+    if (detailsBtn) {
+      detailsBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        openDetailModal(property);
       });
     }
 
@@ -547,11 +557,101 @@
     });
   }
 
+  // ==========================================================================
+  // FENÊTRE DE DÉTAILS (photo principale + vignettes + description + conditions)
+  // ==========================================================================
+  const detailModal = document.getElementById('detailModal');
+  const detailModalOverlay = document.getElementById('detailModalOverlay');
+  const detailModalClose = document.getElementById('detailModalClose');
+  const detailMain = document.getElementById('detailMain');
+  const detailThumbs = document.getElementById('detailThumbs');
+  const detailBadge = document.getElementById('detailBadge');
+  const detailTitle = document.getElementById('detailTitle');
+  const detailLocation = document.getElementById('detailLocation');
+  const detailPrice = document.getElementById('detailPrice');
+  const detailWhatsapp = document.getElementById('detailWhatsapp');
+  const detailDescription = document.getElementById('detailDescription');
+  const detailConditionsWrap = document.getElementById('detailConditionsWrap');
+  const detailConditions = document.getElementById('detailConditions');
+
+  let detailActiveIndex = 0;
+  let detailProperty = null;
+
+  function openDetailModal(property) {
+    if (!detailModal) return;
+    detailProperty = property;
+    detailActiveIndex = 0;
+
+    detailBadge.textContent = typeLabel(property.type) + ' · ' + (property.operation === 'vente' ? 'À vendre' : 'À louer') + (property.furnished ? ' · Meublé' : '');
+    detailTitle.textContent = property.title;
+    detailLocation.innerHTML = LOCATION_ICON + ' ' + property.location;
+    detailPrice.textContent = property.priceLabel;
+
+    const whatsappMessage = encodeURIComponent(
+      'Bonjour, je suis intéressé(e) par l\'annonce : ' + property.title + ' (' + property.location + (property.ref ? ', réf. ' + property.ref : '') + ').'
+    );
+    detailWhatsapp.href = 'https://wa.me/22873079423?text=' + whatsappMessage;
+
+    detailDescription.textContent = property.description && property.description.trim()
+      ? property.description
+      : 'Aucune description disponible pour cette annonce. Contactez-nous pour plus d\'informations.';
+
+    if (property.conditions && property.conditions.length) {
+      detailConditionsWrap.style.display = 'block';
+      detailConditions.innerHTML = property.conditions.map(function (c) {
+        return '<li>' + c + '</li>';
+      }).join('');
+    } else {
+      detailConditionsWrap.style.display = 'none';
+    }
+
+    renderDetailGallery();
+
+    detailModal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    registerView(property.id);
+  }
+
+  function renderDetailGallery() {
+    if (!detailProperty) return;
+    const images = detailProperty.images;
+
+    detailMain.innerHTML = '<img src="' + resolveImg(images[detailActiveIndex]) + '" alt="' + detailProperty.title + '">';
+
+    if (images.length > 1) {
+      detailThumbs.style.display = 'flex';
+      detailThumbs.innerHTML = images.map(function (img, i) {
+        return '<button type="button" class="detail-modal__thumb' + (i === detailActiveIndex ? ' is-active' : '') + '" data-index="' + i + '"><img src="' + resolveImg(img) + '" alt="Photo ' + (i + 1) + '"></button>';
+      }).join('');
+      Array.from(detailThumbs.querySelectorAll('.detail-modal__thumb')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          detailActiveIndex = Number(btn.getAttribute('data-index'));
+          renderDetailGallery();
+        });
+      });
+    } else {
+      detailThumbs.style.display = 'none';
+      detailThumbs.innerHTML = '';
+    }
+  }
+
+  function closeDetailModal() {
+    detailModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  if (detailModalClose) detailModalClose.addEventListener('click', closeDetailModal);
+  if (detailModalOverlay) detailModalOverlay.addEventListener('click', closeDetailModal);
+
   document.addEventListener('keydown', function (e) {
-    if (!lightbox || !lightbox.classList.contains('is-open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') lbNextFn();
-    if (e.key === 'ArrowLeft') lbPrevFn();
+    if (lightbox && lightbox.classList.contains('is-open')) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') lbNextFn();
+      if (e.key === 'ArrowLeft') lbPrevFn();
+    }
+    if (detailModal && detailModal.classList.contains('is-open') && e.key === 'Escape') {
+      closeDetailModal();
+    }
   });
 
   // ==========================================================================
